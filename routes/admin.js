@@ -14,15 +14,27 @@ else{
 
 
 
+
 route.get("/",checkAdmin,async(req,res)=>{
-    res.render('admin/index.ejs');
+    var img = await exe(`select * from userlogin `)
+
+    var obj={"img":img[0]}
+
+  
+
+    res.render('admin/index.ejs',obj);
 })
 
 
 route.get("/profile",checkAdmin,async(req,res)=>{
     let d=await exe('select * from userlogin');
+    var img = await exe(`select * from userlogin `)
+
+   
+
     let obj={
-        "data":d[0]
+        "data":d[0],
+        "img":img[0]
     }
     res.render("admin/addaccount.ejs",obj);
 })
