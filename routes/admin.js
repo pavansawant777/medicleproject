@@ -27,23 +27,26 @@ route.get("/profile",checkAdmin,async(req,res)=>{
     res.render("admin/addaccount.ejs",obj);
 })
 
-route.post("/update-userimage",async(req,res)=>{
-    req.body.image=new Date().getTime()+req.files.img.name;
-    req.files.img.mv("public/userimage/"+req.body.image);
-    let d=await exe(`update userlogin set image='${req.body.image}' where id='1' `);
-    if(d.length!=0){
-        res.redirect("/profile");
-    }
-})
+route.post("/update-user",async(req,res)=>{
 
-route.post("/save-account",async(req,res)=>{
+    if(req.files != null){
+        req.body.image=new Date().getTime()+req.files.img.name;
+        req.files.img.mv("public/userimage/"+req.body.image);
+
+        let d=await exe(`update userlogin set image='${req.body.image}' where id='1' `);
+
+    }
 
     let d=await exe(`update userlogin set username='${req.body.username}',password='${req.body.password}' where id='1' `);
     res.redirect("/profile");
 
 
 
-}) 
+  
+    
+})
+
+
 route.get("/logout",(req,res)=>{
     req.session.uid=0;
     res.redirect("/login");

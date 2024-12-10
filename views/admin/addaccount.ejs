@@ -1,6 +1,6 @@
 <%-include('navbar.ejs')%>
 <div class="container">
-    <h2 class="main-title"> User Profile</h2>
+    <h2 class="main-title text-center"> User Profile</h2>
     <div class="row justify-content-center align-item-center">
         <div class="col-md-8  rounded-4 shadow p-4">
           <div class="row">
@@ -11,15 +11,15 @@
 
                 </div>
               </div>
-              <form method="post" enctype="multipart/form-data" action="/update-userimage">
+              <form method="post" enctype="multipart/form-data" action="/update-user">
                  <div class="input-group mt-3 ">
-                  <input type="file" class="form-control " name="img" required ><button type="submit" class="btn btn-primary "><i class="fa fa-upload"></i></button>
+                  <input type="file" class="form-control " name="img">
                  </div>            
 
-              </form>
+              
             </div>
             <div class="col-md-6">
-              <form  method="post"   action="/save-account">
+              
                 
                 
             <label class="mb-2" style="font-size: 14px;">Username<span class="text-danger">*</span> :</label>
