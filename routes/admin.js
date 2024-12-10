@@ -18,6 +18,7 @@ route.get("/",checkAdmin,async(req,res)=>{
     res.render('admin/index.ejs');
 })
 
+
 route.get("/profile",checkAdmin,async(req,res)=>{
     let d=await exe('select * from userlogin');
     let obj={
@@ -48,5 +49,6 @@ route.get("/logout",(req,res)=>{
     res.redirect("/login");
 })
     
+
 
 module.exports=route;
