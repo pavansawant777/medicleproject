@@ -2,20 +2,45 @@ let express=require('express');
 let route=express.Router();
 
 var exe = require("./connection.js")
+
 function checkAdmin(req,res,next){
-    req.session.uid=1;
-if(req.session.uid!=0){
+   console.log(req.session.uid);
+if(req.session.uid){
 next();
 }
 else{
-    res.redirect("/");
+    res.redirect("/login");
 }
 }
 
 
+
+route.get("/login",(req,res)=>{
+    let obj={
+        "warn":''
+    }
+    res.render("admin/l.ejs",obj);
+})
+
+route.post("/user-login",async(req,res)=>{
+    let d=await exe(`select*from userlogin where username='${req.body.username}' and password='${req.body.password}' `);
+
+
+    if(d.length==0){
+        let obj={
+"warn":'Wrong username or password'
+        }
+        res.render('admin/l.ejs',obj)
+    }
+    else{
+        req.session.uid=d[0].id;
+        res.redirect("/");
+    }
+})
 
 
 route.get("/",checkAdmin,async(req,res)=>{
+    
     var img = await exe(`select * from userlogin `)
 
     var obj={"img":img[0]}
@@ -60,7 +85,7 @@ route.post("/update-user",async(req,res)=>{
 
 
 route.get("/logout",(req,res)=>{
-    req.session.uid=0;
+    req.session.uid=undefined;
     res.redirect("/login");
 })
     
