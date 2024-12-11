@@ -1,0 +1,47 @@
+<%-include('navbar.ejs')%>
+
+<div class="container p-5">
+    <h3 class="text-center mb-3">Edit Party Details</h3>
+    <div class="row justify-content-center align-item-center">
+        <div class="col-md-5 rounded shadow p-4">
+            <form action="/update-party/<%-data.id%>" method="post" id="myform">
+       <label class="mb-2">Vendor Name <span class="text-danger">*</span>:</label>
+       <input type="text" name="name" class="form-control mb-3" value="<%-data.name%>" required>
+       <label class="mb-2">Vendor Email <span class="text-danger">*</span>:</label>
+       <input type="email" name="email" class="form-control mb-3" value="<%-data.email%>" required>
+       <label class="mb-2">Vendor Contact <span class="text-danger">*</span>:</label>
+       <input type="number" name="contact" class="form-control mb-3" value="<%-data.contact%>" required>
+       <label class="mb-2">Vendor Website <span class="text-danger"></span>:</label>
+       <input type="url" name="website" class="form-control mb-3" value="<%-data.website%>" >
+       <label class="mb-2">Contract Start :<span class="text-danger"></span></label>
+       <input type="text" readonly class="form-control mb-3" value="<%-data.contract_start%>" >
+       <%if(data.contract_status=='active'){%>
+        <label class="mb-2">Contract Status <span class="text-danger"></span>:</label>
+        <select  name="contract_status" class="form-control mb-3"  >
+<option selected>active</option>
+<option>expire</option>
+
+        </select>
+        <%}else{%>
+     
+            <label class="mb-2">Contract End :<span class="text-danger"></span></label>
+            <input type="text" readonly class="form-control mb-3" value="<%-data.contract_end%>" >
+            <%}%>
+<div class="w-100 text-center">
+    <button class="btn btn-primary w-25" type="button" onclick="sendData()">Save</button>
+</div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    function sendData(){
+        let r=confirm("Update data") 
+        if(r==true){
+            document.getElementById('myform').submit();
+        }
+    }
+</script>
+
+<%-include('footer.ejs')%>

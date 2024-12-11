@@ -8,6 +8,38 @@
  * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
 
+/* From Uiverse.io by csemszepp */ 
+.custum-file-upload {
+  height: 40px;
+  width: 350px;
+  display: flex;
+  gap: 10px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+ 
+  background-color: white;
+  border-radius: 10px;
+ 
+}
+.custum-file-upload .icon svg {
+  height: 25px;
+  fill: black;
+}
+.custum-file-upload input {
+  display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
 @import url(../fonts/stylesheet.css);
 
 html {
