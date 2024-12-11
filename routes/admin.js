@@ -131,8 +131,73 @@ route.post("/update-party/:id",async(req,res)=>{
    }
    res.redirect("/show-party/"+req.params.id);
 })
+
+
 route.get("/delete-party/:id",checkAdmin,async(req,res)=>{
     let d=await exe(`delete from vendor where id='${req.params.id}'`);
     res.redirect("/parties");
 })
+
+
+
+route.get("/addcustomer",checkAdmin,async function(req,res){
+    var img = await exe(`select * from userlogin `)
+
+    var obj={"img":img[0]}
+    res.render("admin/addcustomer.ejs",obj)
+})
+
+
+route.post("/save-customer", async function(req,res){
+    var d= req.body
+
+    var sql = `insert into customer(cname,cemail,ccontact,cadd)values('${d.cname}','${d.cemail}','${d.ccontact}','${d.cadd}')`
+
+    var data = await exe(sql);
+
+    res.redirect("/addcustomer")
+})
+
+route.get("/allcustomer",checkAdmin,async function(req,res){
+    var img = await exe(`select * from userlogin `)
+    var clist = await exe(`select * from customer`)
+
+    var obj={"img":img[0],"clist":clist}
+    res.render("admin/customer_list.ejs",obj)
+})
+
+
+route.get("/delete-customer/:id",async function(req,res){
+    // var sql = `delete from customer where cid = '${req.params.id}'`
+    var data = await exe(`delete from customer where cid='${req.params.id}'`)
+
+    res.redirect("/allcustomer")
+
+})
+
+route.get("/show-customer/:id", checkAdmin ,async function(req,res){
+
+    var data = await exe(`select * from customer where cid ='${req.params.id}'`)
+
+    var img = await exe(`select * from userlogin`)
+
+    var obj = {"img":img[0],"data":data[0]}
+
+    res.render("admin/viewcustomer.ejs",obj)
+
+
+})
+
+route.post("/update-customer/:id",async function(req,res){
+var d = req.body
+    var data = await exe(`update customer set cname = '${d.cname}',cemail = '${d.cemail}',ccontact = '${d.ccontact}',cadd = '${d.cadd}' where cid ='${req.params.id}'`)
+    res.redirect("/allcustomer")
+})
+
+
+
+
+
+
+
 module.exports=route;

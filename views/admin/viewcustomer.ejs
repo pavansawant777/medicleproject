@@ -1,0 +1,42 @@
+<%- include("navbar.ejs") %>
+
+
+<div class="container p-4">
+    <div class="row justify-content-center align-item-center">
+        <div class="w-100 text-center">
+            <h3>Upate Customer</h3>
+        </div>
+        <div class="col-md-5 rounded shadow p-4 mt-5">
+        <form method="post" action="/update-customer/<%-data.cid%>" id="myform">
+            <input type="hidden" name="cid" value="<%=data.cid%>">
+            <label class="mb-2">Party Name <span class="text-danger">*</span> :</label>
+
+            <input type="text" required name="cname" class="form-control mb-3" value="<%=data.cname%>">
+
+            <label class="mb-2">Party Email <span class="text-danger">*</span> :</label>
+            <input type="email" required name="cemail" class="form-control mb-3" value="<%=data.cemail%>">
+
+            <label class="mb-2">Party Contact Number <span class="text-danger">*</span> :</label>
+            <input type="number" required name="ccontact" class="form-control mb-3" value="<%=data.ccontact%>">
+
+            <label class="mb-2">Party Address <span class="text-danger"></span> :</label>
+            <textarea  name="cadd" class="form-control mb-3"><%=data.cadd%></textarea>            
+
+            <button class="btn btn-primary w-100 mt-4" type="button" onclick="sendData1()" >Save</button>
+        </form>
+
+        </div>
+    </div>
+</div>
+<script>
+    function sendData1(){
+        let r=confirm('Update Customer ?');
+        if(r==true){
+        document.getElementById("myform").submit();
+        }
+    }
+</script>
+
+
+
+<%- include("footer.ejs") %>
