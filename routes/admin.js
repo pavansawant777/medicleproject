@@ -42,8 +42,10 @@ route.post("/user-login",async(req,res)=>{
 route.get("/",checkAdmin,async(req,res)=>{
     
     var img = await exe(`select * from userlogin `)
+    var ttl = await exe(`select count(*) as ttlcount from customer`)
+    var ttp = await exe(`select count(*) as ttlparty from vendor`)
 
-    var obj={"img":img[0]}
+    var obj={"img":img[0],"ttl":ttl[0],"ttp":ttp[0]}
 
   
 
