@@ -4,7 +4,7 @@ let route=express.Router();
 var exe = require("./connection.js")
 
 function checkAdmin(req,res,next){
-   req.session.uid=1;
+req.session.uid=1;
 if(req.session.uid){
 next();
 }
@@ -100,7 +100,7 @@ route.post("/save-party",async(req,res)=>{
 
     let d=await exe(`insert into vendor(name,email,contact,ttl_purchases,website,contract_start,contract_end,contract_status) values('${req.body.name}','${req.body.email}','${req.body.contact}','${0}',
         '${req.body.website}','${new Date().toISOString().slice(0,10)}','${"null"}','${"active"}')`);
-        res.redirect("/add-party");
+        res.redirect("/parties");
 })
 route.get("/parties",checkAdmin,async(req,res)=>{
     var img = await exe(`select * from userlogin `)
@@ -112,12 +112,27 @@ let obj={
 res.render("admin/vendorlist.ejs",obj);
 })
 route.get("/show-party/:id",checkAdmin,async(req,res)=>{
-let d=await exe(`select*from vendor wehre id='${req.params.id}'`);
+let d=await exe(`select*from vendor where id='${req.params.id}'`);
 var img = await exe(`select * from userlogin `)
 let obj={
     "data":d[0],
     "img":img[0]
 }
 res.render("admin/viewparty.ejs",obj);
+})
+route.post("/update-party/:id",async(req,res)=>{
+  
+   if(req.body.contract_status=='expire'){
+    let d=await exe(`update vendor set name='${req.body.name}',email='${req.body.email}',contact='${req.body.contact}',website='${req.body.website}',contract_status='${req.body.contract_status}',contract_end='${new Date().toISOString().slice(0,10)}' where id='${req.params.id}'`);
+   }
+   else{
+    let d=await exe(`update vendor set name='${req.body.name}',email='${req.body.email}',contact='${req.body.contact}',website='${req.body.website}' where id='${req.params.id}'`);
+
+   }
+   res.redirect("/show-party/"+req.params.id);
+})
+route.get("/delete-party/:id",checkAdmin,async(req,res)=>{
+    let d=await exe(`delete from vendor where id='${req.params.id}'`);
+    res.redirect("/parties");
 })
 module.exports=route;
