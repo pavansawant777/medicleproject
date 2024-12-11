@@ -4,7 +4,7 @@ let route=express.Router();
 var exe = require("./connection.js")
 
 function checkAdmin(req,res,next){
-   console.log(req.session.uid);
+   req.session.uid=1;
 if(req.session.uid){
 next();
 }
@@ -89,6 +89,35 @@ route.get("/logout",(req,res)=>{
     res.redirect("/login");
 })
     
+route.get("/add-party",checkAdmin,async(req,res)=>{
+    var img = await exe(`select * from userlogin `)
 
+    var obj={"img":img[0]}
+    res.render("admin/addparty.ejs",obj);
+})
+route.post("/save-party",async(req,res)=>{
+    
 
+    let d=await exe(`insert into vendor(name,email,contact,ttl_purchases,website,contract_start,contract_end,contract_status) values('${req.body.name}','${req.body.email}','${req.body.contact}','${0}',
+        '${req.body.website}','${new Date().toISOString().slice(0,10)}','${"null"}','${"active"}')`);
+        res.redirect("/add-party");
+})
+route.get("/parties",checkAdmin,async(req,res)=>{
+    var img = await exe(`select * from userlogin `)
+let d=await exe('select*from vendor');
+let obj={
+    "data":d,
+    "img":img[0]
+}
+res.render("admin/vendorlist.ejs",obj);
+})
+route.get("/show-party/:id",checkAdmin,async(req,res)=>{
+let d=await exe(`select*from vendor wehre id='${req.params.id}'`);
+var img = await exe(`select * from userlogin `)
+let obj={
+    "data":d[0],
+    "img":img[0]
+}
+res.render("admin/viewparty.ejs",obj);
+})
 module.exports=route;

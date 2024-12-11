@@ -1,0 +1,14 @@
+<%-include('navbar.ejs')%>
+
+<div class="container p-5">
+    <div class="row justify-content-center align-item-center">
+        <div class="col-md-5 rounded shadow">
+            <form action="/update-party/<%-data.id%>" method="post">
+       <label class="mb-2">Name <span class="text-danger">*</span>:</label>
+       <input type="text" name="name">
+
+            </form>
+        </div>
+    </div>
+</div>
+<%-include('footer.ejs')%>
