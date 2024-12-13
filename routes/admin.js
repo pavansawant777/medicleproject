@@ -1,8 +1,6 @@
 let express=require('express');
 let route=express.Router();
-
 var exe = require("./connection.js")
-
 function checkAdmin(req,res,next){
 req.session.uid=1;
 if(req.session.uid){
@@ -12,9 +10,6 @@ else{
     res.redirect("/login");
 }
 }
-
-
-
 route.get("/login",(req,res)=>{
     let obj={
         "warn":''
@@ -195,13 +190,12 @@ var d = req.body
     var data = await exe(`update customer set cname = '${d.cname}',cemail = '${d.cemail}',ccontact = '${d.ccontact}',cadd = '${d.cadd}' where cid ='${req.params.id}'`)
     res.redirect("/allcustomer")
 })
-
-route.get("/addpurchase",checkAdmin,async function(req,res){
+route.get("/addpurchase",checkAdmin,async(req,res)=>{
     var img = await exe(`select * from userlogin`)
-    var obj = {"img":img[0]}
-    res.render("admin/purchase.ejs",obj)
-})
 
+    var obj = {"img":img[0]}
+res.render("admin/purchase.ejs",obj);
+})
 
 
 
