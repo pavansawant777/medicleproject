@@ -196,6 +196,12 @@ var d = req.body
     res.redirect("/allcustomer")
 })
 
+route.get("/addpurchase",checkAdmin,async function(req,res){
+    var img = await exe(`select * from userlogin`)
+    var obj = {"img":img[0]}
+    res.render("admin/purchase.ejs",obj)
+})
+
 
 
 

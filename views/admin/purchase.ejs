@@ -1,0 +1,71 @@
+<%-include('navbar.ejs')%>
+<div class="container p-4">
+    <div class="row py-3 border-3 border-top border-bottom border-info">
+        <div class="col-md-2">Medicine Name</div>
+        <div class="col-md-1">Packing</div>
+        <div class="col-md-1">Batch ID</div>
+        <div class="col-md-2">Ex. Date (mm/yy)</div>
+        <div class="col-md-1">Qantity</div>
+        <div class="col-md-1">MRP</div>
+        <div class="col-md-1">Rate</div>
+        <div class="col-md-3">
+            <div class="row">
+                <div class="col-md-7">Amount</div>
+                <div class="col-md-5">Action</div>
+            </div>
+        </div> 
+        
+    </div>
+
+    
+        
+        <form action="/save_purchase" method="post">
+            <div class="row my-4">   
+                <div class="col-md-2">
+                    <input type="text" name="pname" class="form-control shadow-none" placeholder="Medicine Name">
+                </div>
+                <div class="col-md-1">
+                    <input type="text" name="ppacking" class="form-control shadow-none" >
+
+                </div>
+                <div class="col-md-1">
+                    <input type="text" name="pbatchid" class="form-control shadow-none" >
+
+                </div>
+                <div class="col-md-2">
+                    <input type="month" name="ppacking" class="form-control shadow-none" >
+                    
+                </div>
+                <div class="col-md-1">
+                    <input type="number" name="ppacking" class="form-control shadow-none" >
+
+                </div>
+                <div class="col-md-1">
+                    <input type="number" name="ppacking" class="form-control shadow-none" >
+
+                </div>
+                <div class="col-md-1">
+                    <input type="number" name="ppacking" class="form-control shadow-none" >
+
+                </div>
+                <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-7">
+                    <input type="number" name="ppacking" class="form-control shadow-none" >
+
+                    </div>
+                    <div class="col-md-5">
+                        <button class="btn bg-transparent text-primary border p-2" >Plus</button>
+                        <button class="btn bg-transparent text-danger border p-2"><i class="fa-solid fa-trash-can fs-5"></i> </button>
+                    </div>
+                </div>
+                </div>
+            </div>    
+        </form>
+       
+    
+</div>
+
+
+
+<%-include('footer.ejs')%>
