@@ -1,0 +1,153 @@
+<%-include('navbar.ejs')%>
+<%
+function checkExpiry(c){
+    let d=new Date(c).toISOString().slice(0,10);
+    let n=new Date().toISOString().slice(0,10);
+      if((d.slice(0,4)-n.slice(0,4))==0){
+        if((d.slice(5,7)-n.slice(5,7))<=1){
+return true;
+}
+      
+     }
+}
+
+%>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/datetime/1.5.4/css/dataTables.dateTime.min.css">
+<style>
+    input{
+      box-shadow: 0px 0px 1px 0px black;
+      background-color: white;
+    }
+    #blinking-button{
+    padding: 5px;
+    border-radius:50%; 
+
+}
+#mybtn{
+    padding: 5px;
+    border-radius:50%; 
+    background-color: #06e828;
+}
+@keyframes blink {
+  0%, 100% {background-color:#dde806;}
+  50% {background-color: #f8730e;}
+}
+#blinking-button {
+  background-color: #8EDDBE;
+  color: white;
+  animation: blink 1s linear infinite;
+}
+   
+</style>
+<div class="container p-5">
+    <div class="row border p-4 rounded" style="overflow-x: scroll;">
+        <table border="0" cellspacing="5" cellpadding="5">
+            <tbody ><tr>
+                <td style="width: 10%;">Minimum date:</td>
+                <td><input type="text" id="min" name="min"></td>
+            </tr>
+            <tr>
+                <td style="width: 10%;">Maximum date:</td>
+                <td><input type="text" id="max" name="max"></td>
+            </tr>
+        </tbody></table>
+
+        <table id="example" class="display nowrap table table-striped table-primary" style="width:100%">
+            <thead>
+                <tr>
+                  
+                    <th>Name</th>
+                    <th>Batch Id</th>
+                    <th>Packing</th>
+                    <th>Quantity</th>
+                    <th>MRP</th>
+                    <th>Rate </th>
+                    <th>Amount</th>
+                    <th>Import Date</th>
+                    <th>Expriry Date</th>
+                    <th></th>
+            
+                </tr>
+            </thead>
+            <tbody>
+                <%for(let i of p){%>
+                 <tr>
+              
+                    <td><%-i.pname%></td>
+                    <td><%-i.batchId%></td>
+                    <td><%-i.packing%></td>
+                    <td><%-i.qty%></td>
+                    <td><%-i.mrp%></td>
+                    <td><%-i.rate%></td>
+                    <td><%-i.amt%></td>
+                    <td><%-i.adddate%></td>
+                    <td>
+                        <button id="<%-(checkExpiry( i.exp))?'blinking-button':'mybtn'%>"></button>
+                        <%-i.exp%></td>
+                    <td><a style="cursor: pointer;" onclick="deleteData('<%-i.id%>')" class="text-danger"><i class="fa fa-trash"></i></a></td>
+ 
+
+                </tr>
+                <%}%>
+             
+            </tbody>
+      
+        </table>
+    </div>
+</div>
+
+<script>
+   function deleteData(ele){
+    let r=confirm('Delete Data ?')
+    if(r==true){
+        location.href="/delete-product/"+ele
+    }
+   }
+    
+    
+</script>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+<script src="https://cdn.datatables.net/datetime/1.5.4/js/dataTables.dateTime.min.js"></script>
+<script>
+    let minDate, maxDate;
+ 
+ // Custom filtering function which will search data in column four between two values
+ DataTable.ext.search.push(function (settings, data, dataIndex) {
+     let min = minDate.val();
+     let max = maxDate.val();
+     let date = new Date(data[4]);
+  
+     if (
+         (min === null && max === null) ||
+         (min === null && date <= max) ||
+         (min <= date && max === null) ||
+         (min <= date && date <= max)
+     ) {
+         return true;
+     }
+     return false;
+ });
+  
+ // Create date inputs
+ minDate = new DateTime('#min', {
+     format: 'MMMM Do YYYY'
+ });
+ maxDate = new DateTime('#max', {
+     format: 'MMMM Do YYYY'
+ });
+  
+ // DataTables initialisation
+ let table = new DataTable('#example');
+ 
+ document.querySelectorAll('#min, #max').forEach((el) => {
+     el.addEventListener('change', () => table.draw());
+ });
+</script>
+<script type="text/javascript">
+	
+
+</script>
+<%-include('footer.ejs')%>

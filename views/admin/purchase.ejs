@@ -10,7 +10,12 @@
         
         height: 150px;
     }
+    #e-warn{
+        display: none;
+    }
+ 
 </style>
+
 <div class="container p-4">
   <div class="w-100 text-center mb-3">
     <h2>Add Medicines</h2>
@@ -79,9 +84,27 @@
 
 </tbody>
 
-<tfoot>
-    <tr>
-        <td colspan="9">    <button class="btn btn-primary float-end" onclick="sendData()" id="savebtn" disabled>Save</button>
+<tfoot >
+    <tr >
+        <td colspan="3">
+            <select id="vn" onchange="selectVendor()" class="form-control">
+            <option selected value="" disabled>Select the party</option>
+
+<%for(let i of v){
+    
+    %>
+    <option value="<%-i.id%>"><%-i.name%></option>
+    <%}%>
+        </select>
+    <span class="text-danger" id="e-warn" style="font-size: 13px;"><i class="fa fa-warning"></i>&nbsp;Please select the party </span>
+    </td>
+        <td  colspan="2">
+            <input type="number" id="vnum" class="w-100" placeholder="Contact" readonly >
+        </td>
+        <td  colspan="2">
+            <input type="email" id="vem" class="w-100" placeholder="Email" readonly >
+        </td>
+        <td colspan="2">    <button class="btn w-100  btn-primary float-end" onclick="sendData()" disabled id="savebtn">Save</button>
         </td>
     </tr>
    
@@ -94,6 +117,23 @@
     
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+       let vid="";
+function selectVendor(){
+ 
+  let ar=  <%- JSON.stringify(v) %>;
+
+    for(let i of ar){
+        if(i.id==document.getElementById('vn').value){
+           $("#vnum").val(i.contact);
+           $("#vem").val(i.email);
+           vid=i.id;
+        }
+    }
+   
+}
+</script>
+
 <script>
     let i=0;
     function addRow(){
@@ -131,6 +171,7 @@ else{
 }
 }
   function sendData(){
+   
     let obj={
         "pname":[],
         "packing":[],
@@ -139,7 +180,8 @@ else{
         "qty":[],
         "mrp":[],
         "rate":[],
-        "amt":[]
+        "amt":[],
+        "vid":vid,
     }
     let pname=document.getElementsByName("pname");
     let ppacking=document.getElementsByName("ppacking");
@@ -175,12 +217,18 @@ else{
     for(let n of pamt){
         obj.amt.push(n.value);
     }
-    
-$.ajax({"url":"/save-purchase","method":"post","data":obj}).done((res)=>{
-    if(res){
-        document.getElementById("alert").click();
+    if(obj.vid==""){
+        document.getElementById("e-warn").style.display='block';
     }
-})
+    else{
+        document.getElementById("e-warn").style.display='none';
+  $.ajax({"url":"/save-purchase","method":"post","data":obj}).done((res)=>{
+      if(res){
+          document.getElementById("alert").click();
+      }
+  })
+    }
+
 
     
   }

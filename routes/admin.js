@@ -192,8 +192,8 @@ var d = req.body
 })
 route.get("/addpurchase",checkAdmin,async(req,res)=>{
     var img = await exe(`select * from userlogin`)
-
-    var obj = {"img":img[0]}
+    let ven=await exe(`select*from vendor`);
+    var obj = {"img":img[0],"v":ven}
 res.render("admin/purchase.ejs",obj);
 })
 route.post("/save-purchase",async(req,res)=>{
@@ -206,6 +206,17 @@ route.post("/save-purchase",async(req,res)=>{
 
 
 })
+route.get("/all-purchases",checkAdmin,async(req,res)=>{
+    var img = await exe(`select * from userlogin`)
+    let p=await exe(`select*from product`);
+    var obj = {"img":img[0],"p":p};
+    res.render("admin/purchaselist.ejs",obj);
+})
+route.get("/delete-product/:id",checkAdmin,async(req,res)=>{
+let d=await exe(`delete from product where id='${req.params.id}'`)
+res.redirect("/all-purchases");
+})
+
 
 
 
