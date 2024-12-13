@@ -196,7 +196,16 @@ route.get("/addpurchase",checkAdmin,async(req,res)=>{
     var obj = {"img":img[0]}
 res.render("admin/purchase.ejs",obj);
 })
+route.post("/save-purchase",async(req,res)=>{
+  
+    let x=req.body;
+    for(let i=0;i<x.pname.length;i++){
+        let d=await exe(`insert into product(pname,packing,batchid,exp,qty,mrp,rate,amt,adddate,isexpired) values('${x.pname[i]}','${x.packing[i]}','${x.bid[i]}','${x.exp[i]}','${x.qty[i]}','${x.mrp[i]}','${x.rate[i]}','${x.amt[i]}','${new Date().toISOString().slice(0,10)}','${false}')`);
+    }
+    res.send(true);
 
+
+})
 
 
 
