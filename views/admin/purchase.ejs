@@ -80,11 +80,12 @@
 
 
 
+
 <tbody id="myform">
 
 </tbody>
 
-<tfoot >
+<tfoot>
     <tr >
         <td colspan="3">
             <select id="vn" onchange="selectVendor()" class="form-control">
@@ -110,7 +111,12 @@
    
 </tfoot>
 
+<tfoot>
+    <td colspan="9 text-center">
+     <b><i class="fa fa-user"></i>&nbsp; Party Details</b>
 
+    </td>
+</tfoot>
 
         </table>
        </div>
@@ -143,7 +149,33 @@ function selectVendor(){
 
        
 <td><input type="text" name="pname" class="form-control shadow-none" placeholder="Medicine Name"></td>
-<td><input type="text" name="ppacking" class="form-control shadow-none" placeholder="packing type" ></td>    
+<td><select  name="ppacking" class="form-control shadow-none"  >
+      <option selected value="" disabled >Select packing</option>
+    <option>1 Tab</option>
+    <option>2 Tab</option>
+    <option>3 Tab</option>
+    <option>4 Tab</option>
+    <option>5 Tab</option>
+    <option>6 Tab</option>
+    <option>7 Tab</option>
+    <option>8 Tab</option>
+    <option>9 Tab</option>
+    <option>10 Tab</option>
+    <option>11 Tab</option>
+    <option>12 Tab</option>
+    <option>13 Tab</option>
+    <option>14 Tab</option>
+    <option>15 Tab</option>
+    <option>16 Tab</option>
+    <option>17 Tab</option>
+    <option>18 Tab</option>
+    <option>19 Tab</option>
+    <option>20 Tab</option>
+    <option>250 ml</option>
+    <option>500 ml</option>
+    <option>750 ml</option>
+    </select>
+    </td>    
 <td><input type="text" name="pbatchid" class="form-control shadow-none"  placeholder="Batch Id"></td> 
 <td>   <input type="month" name="pexp" class="form-control shadow-none" ></td> 
 <td>   <input type="number" name="pqty" placeholder="Quantity" class="form-control shadow-none" ></td> 
