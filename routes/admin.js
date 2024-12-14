@@ -210,7 +210,7 @@ route.post("/save-purchase",async(req,res)=>{
 })
 route.get("/all-purchases",checkAdmin,async(req,res)=>{
     var img = await exe(`select * from userlogin`)
-    let p=await exe(`select*from product`);
+    let p=await exe(`select*,(select name from vendor where vendor.id=product.party) as party_name from product `);
 
     var obj = {"img":img[0],"p":p};
     res.render("admin/purchaselist.ejs",obj);

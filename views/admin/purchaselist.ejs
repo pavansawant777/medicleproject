@@ -58,6 +58,7 @@ return true;
                 <tr>
                   
                     <th>Name</th>
+                    <th>Vendor</th>
                     <th>Batch Id</th>
                     <th>Packing</th>
                     <th>Quantity</th>
@@ -75,6 +76,10 @@ return true;
                  <tr>
               
                     <td><%-i.pname%></td>
+                    <td>
+                    <a class="text-primary" href="/show-party/<%-i.party%>"  ><%-i.party_name%><sup><i class="fa fa-circle-info"></i></sup></a>
+                    
+                    </td>
                     <td><%-i.batchId%></td>
                     <td><%-i.packing%></td>
                     <td><%-i.qty%></td>
