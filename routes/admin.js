@@ -10,6 +10,22 @@ else{
     res.redirect("/login");
 }
 }
+let expireMed=async()=>{
+let med=await exe(`select*from product`);
+for(let i of med){
+    let d=new Date(i.exp).toISOString().slice(0,10);
+    let n=new Date().toISOString().slice(0,10);
+      if((d.slice(0,4)-n.slice(0,4))==0){
+        if((d.slice(5,7)-n.slice(5,7))<=0){
+       let update=await exe(`update product set isExpired='${1}' where id='${i.id}'`);
+  
+}
+      
+     }
+}
+        
+    
+}
 route.get("/login",(req,res)=>{
     let obj={
         "warn":''
@@ -35,7 +51,7 @@ route.post("/user-login",async(req,res)=>{
 
 
 route.get("/",checkAdmin,async(req,res)=>{
-    
+    expireMed();
     var img = await exe(`select * from userlogin `)
     var ttl = await exe(`select count(*) as ttlcount from customer`)
     var ttp = await exe(`select count(*) as ttlparty from vendor`)
@@ -152,7 +168,7 @@ route.post("/save-customer", async function(req,res){
 
     var data = await exe(sql);
 
-    res.redirect("/addcustomer")
+    res.redirect("/allcustomer")
 })
 
 route.get("/allcustomer",checkAdmin,async function(req,res){
@@ -220,7 +236,13 @@ let d=await exe(`delete from product where id='${req.params.id}'`)
 res.redirect("/all-purchases");
 })
 
-
+route.get("/sale-product",checkAdmin,async(req,res)=>{
+    var img = await exe(`select * from userlogin`)
+    let cust=await exe('select*from customer');
+    let med=await exe(`select*from product where isExpired=${0}`)
+    var obj = {"img":img[0],'c':cust,"med":med};
+    res.render('admin/saleproduct.ejs',obj);
+})
 
 
 
