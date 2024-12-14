@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
   (function () {
     var sidebar = document.querySelector('.sidebar'),
         catSubMenu = document.querySelector('.cat-sub-menu'),
-        sidebarBtns = document.querySelectorAll('.sidebar-toggle');
+        sidebarBtns = document.querySelectorAll('.side-toggle');
 
     var _iterator = _createForOfIteratorHelper(sidebarBtns),
         _step;
