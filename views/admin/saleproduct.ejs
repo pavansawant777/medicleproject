@@ -205,15 +205,16 @@ function sendToBackend(){
      console.log('err')
     }
     else{
-    
-       
+    let r=confirm('Procceed to ahead?')
+       if(r==true){
         $.ajax({
             "url":"/save-bill",
             "method":"post",
             "data":sendData()
         }).done((resp)=>{
-            console.log(resp);
+           location.href="/invoice/"+resp;
         })
+    }
     }
 }
 

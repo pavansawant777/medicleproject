@@ -260,8 +260,29 @@ route.post("/save-bill",async(req,res)=>{
     }
     let bd=await exe(`insert into bill_det(disc,ttl,net_ttl,pmtd,psts,pmny,rmny,bill_id) values('${d.discount}','${d.ttl_amt}','${d.net_ttl}','${d.pmtd}','${d.psts}','${d.pmny}','${d.rmny}','${b.insertId}')`);
 
-    res.send(req.body);
+    res.send(b.insertId+"");
 
+})
+route.get("/invoice/:id",checkAdmin,async(req,res)=>{
+
+    let bill= await exe(`select* from bill where id='${req.params.id}'`);
+    let cus=await exe(`select*from customer where cid='${bill[0].cid}'`)
+    let med=await exe(`select*,(select pname from product where order_list.product=product.id)as pname,(select packing from product where order_list.product=product.id)as pack from order_list where bill_id='${req.params.id}'`);
+    let det=await exe(`select*from bill_det where bill_id='${req.params.id}'`);
+    var img = await exe(`select * from userlogin`)
+    var obj = {"img":img[0],"cus":cus[0],'bill':bill[0],"med":med,'det':det[0]};
+    res.render("admin/invoice.ejs",obj);
+
+})
+route.get('/bill-list',checkAdmin,async(req,res)=>{
+let bill=await exe('select*,(select cname from customer where customer.cid=bill.cid) as cname,(select net_ttl from bill_det where bill_det.bill_id=bill.id) as ttl from bill');
+var img = await exe(`select * from userlogin`)
+var obj = {"img":img[0],'bill':bill};
+res.render("admin/billlist.ejs",obj);
+})
+route.get("/delete-bill/:id",checkAdmin,async(req,res)=>{
+    let b=await exe(`delete from bill where id='${req.params.id}'`);
+    res.redirect("/bill-list");
 })
 
 
