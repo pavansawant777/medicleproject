@@ -13,15 +13,22 @@ else{
 let expireMed=async()=>{
 let med=await exe(`select*from product`);
 for(let i of med){
-    let d=new Date(i.exp).toISOString().slice(0,10);
-    let n=new Date().toISOString().slice(0,10);
-      if((d.slice(0,4)-n.slice(0,4))==0){
-        if((d.slice(5,7)-n.slice(5,7))<=0){
-       let update=await exe(`update product set isExpired='${1}' where id='${i.id}'`);
-  
-}
-      
-     }
+
+
+let e=new Date(i.exp).getTime();
+let n=new Date().getTime();
+let es=e/1000;
+let em=es/60;
+let eh=em/60;
+let ed=eh/24;
+
+let ns=n/1000;
+let nm=ns/60;
+let nh=nm/60;
+let nd=nh/24;
+if(Math.floor(ed-nd)==0){
+    let update=await exe(`update product set isExpired='${1}' where id='${i.id}'`);
+    }
 }
         
     
@@ -242,6 +249,19 @@ route.get("/sale-product",checkAdmin,async(req,res)=>{
     let med=await exe(`select*from product where isExpired=${0}`)
     var obj = {"img":img[0],'c':cust,"med":med};
     res.render('admin/saleproduct.ejs',obj);
+})
+route.post("/save-bill",async(req,res)=>{
+    let d=req.body;
+    let b=await exe(`insert into bill(pdate,cid) values('${new Date().toISOString().slice(0,10)}','${d.cid}')`);
+
+    
+    for(let i=0;i<d.product.length;i++){
+       let s=await exe(`insert into order_list(product,bid,mrp,qty,total,bill_id) values('${d.product[i]}','${d.bid[i]}','${d.mrp[i]}','${d.qty[i]}','${d.total[i]}','${b.insertId}')`);
+    }
+    let bd=await exe(`insert into bill_det(disc,ttl,net_ttl,pmtd,psts,pmny,rmny,bill_id) values('${d.discount}','${d.ttl_amt}','${d.net_ttl}','${d.pmtd}','${d.psts}','${d.pmny}','${d.rmny}','${b.insertId}')`);
+
+    res.send(req.body);
+
 })
 
 

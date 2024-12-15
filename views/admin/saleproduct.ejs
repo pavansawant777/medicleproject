@@ -69,6 +69,7 @@ input{
     </div>
 <div class="row p-0 mt-4" style="overflow-x: scroll;">
 <div class="col-md-12 border p-2">
+    <h4 class="text-primary m-3"><i class="fa fa-list"></i>&nbsp;Bill Details</h4>
 <table class="table table-striped table-bordered table-primary">
     <tr>
         <th>Medicine Name</th>
@@ -154,10 +155,10 @@ function sendData(){
         "ttl_amt":document.getElementById("ttl").value,
         "discount":document.getElementById("disc").value,
         "net_ttl":document.getElementById("net_ttl").value,
-        "p-mtd":document.getElementById("p-mtd").value,
-        "p-sts":document.getElementById("p-sts").value,
-        "p-mny":document.getElementById("p-mny").value,
-        "r-mny":document.getElementById("r-mny").value,
+        "pmtd":document.getElementById("p-mtd").value,
+        "psts":document.getElementById("p-sts").value,
+        "pmny":document.getElementById("p-mny").value,
+        "rmny":document.getElementById("r-mny").value,
         "cid":""
     }
 
@@ -205,13 +206,20 @@ function sendToBackend(){
     }
     else{
     
-        console.log(sendData());
+       
+        $.ajax({
+            "url":"/save-bill",
+            "method":"post",
+            "data":sendData()
+        }).done((resp)=>{
+            console.log(resp);
+        })
     }
 }
 
 function addRow(){
     $("#tbody").append(`<tr>
-            <td ><select class="form-control medi " onchange="selectMed(this)" style="width:90%" name="medi-${j}" >
+            <td ><select class="form-control medi " onchange="selectMed(this)"  name="medi-${j}" >
            <option value="" disabled selected>Select Medicine</option>
             <%for(let i of med){%>
                 
