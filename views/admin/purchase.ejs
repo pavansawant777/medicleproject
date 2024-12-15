@@ -80,20 +80,21 @@
 
 
 
+
 <tbody id="myform">
 
 </tbody>
 
-<tfoot >
+<tfoot>
     <tr >
         <td colspan="3">
-            <select id="vn" onchange="selectVendor()" class="form-control">
+            <select id="vn" onchange="selectVendor()" class="form-control" >
             <option selected value="" disabled>Select the party</option>
 
 <%for(let i of v){
     
     %>
-    <option value="<%-i.id%>"><%-i.name%></option>
+    <option value="<%-i.id%>" class="shadow-none"><%-i.name%></option>
     <%}%>
         </select>
     <span class="text-danger" id="e-warn" style="font-size: 13px;"><i class="fa fa-warning"></i>&nbsp;Please select the party </span>
@@ -110,7 +111,12 @@
    
 </tfoot>
 
+<tfoot>
+    <td colspan="9 text-center">
+     <b><i class="fa fa-user"></i>&nbsp; Party Details</b>
 
+    </td>
+</tfoot>
 
         </table>
        </div>
@@ -143,13 +149,39 @@ function selectVendor(){
 
        
 <td><input type="text" name="pname" class="form-control shadow-none" placeholder="Medicine Name"></td>
-<td><input type="text" name="ppacking" class="form-control shadow-none" placeholder="packing type" ></td>    
+<td><select  name="ppacking" class="form-control shadow-none"  >
+      <option selected value="" disabled >Select packing</option>
+    <option>1 Tab</option>
+    <option>2 Tab</option>
+    <option>3 Tab</option>
+    <option>4 Tab</option>
+    <option>5 Tab</option>
+    <option>6 Tab</option>
+    <option>7 Tab</option>
+    <option>8 Tab</option>
+    <option>9 Tab</option>
+    <option>10 Tab</option>
+    <option>11 Tab</option>
+    <option>12 Tab</option>
+    <option>13 Tab</option>
+    <option>14 Tab</option>
+    <option>15 Tab</option>
+    <option>16 Tab</option>
+    <option>17 Tab</option>
+    <option>18 Tab</option>
+    <option>19 Tab</option>
+    <option>20 Tab</option>
+    <option>250 ml</option>
+    <option>500 ml</option>
+    <option>750 ml</option>
+    </select>
+    </td>    
 <td><input type="text" name="pbatchid" class="form-control shadow-none"  placeholder="Batch Id"></td> 
 <td>   <input type="month" name="pexp" class="form-control shadow-none" ></td> 
-<td>   <input type="number" name="pqty" placeholder="Quantity" class="form-control shadow-none" ></td> 
+<td>   <input type="number" name="pqty" placeholder="Quantity" id="qty" onkeyup="total()" class="form-control shadow-none" ></td> 
 <td>          <input type="number" placeholder="MRP" name="pmrp" class="form-control shadow-none" ></td> 
-<td>          <input type="number" placeholder="Rate" name="prate" class="form-control shadow-none" ></td> 
-<td>          <input type="number" placeholder="Amount" name="pamt" class="form-control shadow-none" ></td> 
+<td>          <input type="number" placeholder="Rate" name="prate" id="rate" onkeyup="total()" class="form-control shadow-none" ></td> 
+<td>          <input type="number" placeholder="Amount" name="pamt" id="tot" onkeyup="total()" class="form-control shadow-none" readonly ></td> 
 <td><button class="btn btn-danger" onClick="delRow()"><i class="fa fa-trash"></i></button></td>
 </tr>`);
 checkSave();   
@@ -235,6 +267,16 @@ else{
   function reload(){
     location.reload();
   }
+
+  function total(){
+    var q=document.getElementById('qty').value;
+  var r=document.getElementById('rate').value;
+
+  var tot = Number(q)*Number(r);
+
+  document.getElementById('tot').value=tot;
+  }
+
     </script>
 
 <%-include('footer.ejs')%>

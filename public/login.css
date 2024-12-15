@@ -4,17 +4,18 @@
 }
 
 body {
-    background-image: linear-gradient(#564779, #67479c);
+    
     height: 100%;
 }
 
 .navbar1 {
-    background-image: radial-gradient(#564779, #67479c);
+    /* background-color: #05303d; */
+    border-bottom: 3px solid #549341 !important;
+
 }
 
-.form1 {
-    background: white;
-}
+
+
 
 .form1 {
     position: relative;
