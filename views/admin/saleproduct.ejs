@@ -74,16 +74,19 @@ input{
     <tr>
         <th>Medicine Name</th>
         <th>Batch Id</th>
+        <th>Unit Price</th>
         <th>Quantity</th>
         <th>MRP</th>
         <th>Total</th>
-        <th><button class="btn btn-primary" onclick="addRow()">+</button></th>
+        <th><button class="btn btn-primary" onclick="addRow('tab')"><i class="fa-solid fa-tablets"></i></button>
+            <button class="btn btn-primary" onclick="addRow('liq')"><i class="fa-solid fa-box"></i></button>
+        </th>
     </tr>
     <tbody id="tbody">
        
     </tbody>
     <tr>
-        <td colspan="6"><h5>Payment Details</h5></td>
+        <td colspan="7"><h5>Payment Details</h5></td>
     </tr>
     <tr>
         <td colspan="2">
@@ -94,7 +97,7 @@ input{
             <label class="mb-2">Dicount (%) :</label>
             <input type="number" onkeyup="setNetTtl()" id="disc" class="form-control" >
         </td>
-        <td colspan="2">
+        <td colspan="3">
             <label class="mb-2">Net Total (&#8377;) :</label>
             <input type="number" readonly id="net_ttl" class="form-control" >
         </td>
@@ -119,7 +122,7 @@ input{
           
               </select>
         </td>
-        <td colspan="1">
+        <td colspan="2">
             <label class="mb-2">Paid Money :</label>
             <input type="number" onkeyup="setPending()" disabled id="p-mny" class="form-control" >
         </td>
@@ -129,7 +132,7 @@ input{
         </td>
     </tr>
     <tr>
-        <td colspan="6">
+        <td colspan="7">
             <button class="btn btn-success" onclick="sendToBackend()" id="p-btn" disabled>Processed</button>
         </td>
     </tr>
@@ -152,6 +155,7 @@ function sendData(){
         "qty":[],
         "mrp":[],
         "total":[],
+        "up":[],
         "ttl_amt":document.getElementById("ttl").value,
         "discount":document.getElementById("disc").value,
         "net_ttl":document.getElementById("net_ttl").value,
@@ -159,7 +163,8 @@ function sendData(){
         "psts":document.getElementById("p-sts").value,
         "pmny":document.getElementById("p-mny").value,
         "rmny":document.getElementById("r-mny").value,
-        "cid":""
+        "cid":"",
+        "isPack":[],
     }
 
     for(let i=0;i<document.getElementsByClassName("medi").length;i++){
@@ -172,6 +177,18 @@ function sendData(){
     }
     for(let i=0;i<document.getElementsByClassName("medi").length;i++){
         obj.bid.push(document.getElementsByClassName("bid")[i].value);
+    }
+    for(let i=0;i<document.getElementsByClassName("medi").length;i++){
+        
+        if(document.getElementsByClassName("uph")[i]){
+            obj.up.push(document.getElementsByClassName("up")[i].value+" per/Tab");
+          obj.isPack.push(false);
+        }
+        else{
+            obj.up.push(document.getElementsByClassName("mrp")[i].value+" per/Pack");
+            obj.isPack.push(true);
+        }
+        
     }
     for(let i=0;i<document.getElementsByClassName("medi").length;i++){
        let mqty=document.getElementsByClassName("mqty")[i].value;
@@ -218,7 +235,8 @@ function sendToBackend(){
     }
 }
 
-function addRow(){
+function addRow(ele){
+    if(ele=="tab"){
     $("#tbody").append(`<tr>
             <td ><select class="form-control medi " onchange="selectMed(this)"  name="medi-${j}" >
            <option value="" disabled selected>Select Medicine</option>
@@ -234,6 +252,10 @@ function addRow(){
             
             <td>
                 <input type="text"  class="form-control bid"  readonly name="bid-${j}" >
+            </td>
+             <td>
+                <input type="text"  class="form-control up"  readonly name="up-${j}" >
+                 <input type="hidden"  class="form-control uph"  readonly name="uph-${j}" >
             </td>
 
 
@@ -252,8 +274,52 @@ function addRow(){
             <td>
                 <button class="btn btn-danger" onclick="delRow()"><i class="fa fa-trash"></i></button>
             </td>
+
         </tr>`);
-j++;
+    }
+    else{
+        $("#tbody").append(`<tr>
+            <td ><select class="form-control medi " onchange="selectMed(this)"  name="medi-${j}" >
+           <option value="" disabled selected>Select Medicine</option>
+            <%for(let i of med){%>
+                
+                <option value="<%-i.id%>"><%-i.pname%></option>
+                
+                <%}%>
+            </select>
+            <span style="font-size:13px" class="text-danger warn" id="emw-${j}"><i class="fa fa-warning"></i>&nbsp;This field is empty !</span>
+            </td>
+
+            
+            <td>
+                <input type="text"  class="form-control bid"  readonly name="bid-${j}" >
+            </td>
+             <td>
+                <input type="text"  class="form-control "  readonly  value="-">
+
+            </td>
+
+
+            <td>
+                <input type="number"   class="form-control mqty" placeholder="Enter Quantity" min="1"   onkeyup="changeQty(this)"  name="mqty-${j}" >
+            </td>
+
+
+            <td>
+                <input type="text"  class="form-control mrp" readonly name="mrp-${j}" >
+            </td>
+            
+            <td>
+                <input type="text" class="form-control  ttl_amt"  readonly name="ttl-${j}" >
+            </td>
+            <td>
+                <button class="btn btn-danger" onclick="delRow()"><i class="fa fa-trash"></i></button>
+            </td>
+
+        </tr>`);
+    }
+
+        j++;
 if(j>0){
 document.getElementById('p-btn').disabled=false;
 }
@@ -274,8 +340,26 @@ function changeQty(ele){
     if(ele.value==0){
        d=1;
     }
-    
+  let val=  document.getElementsByName('medi-'+ele.name.split("-")[1])[0].value;
+   let ar=<%- JSON.stringify(med) %>;
+ 
+   if(document.getElementsByName("uph-"+ele.name.split("-")[1]).length!=0){
+   
+    for(let i of ar){
+        if(i.id==val){
+          
+          let l=  document.getElementsByName("uph-"+ele.name.split("-")[1])[0].value=(d/i.packing.split(" ")[0]);
+          document.getElementsByName("up-"+ele.name.split("-")[1])[0].value=(document.getElementsByName("mrp-"+ele.name.split("-")[1])[0].value/i.packing.split(" ")[0])
+            document.getElementsByName("ttl-"+ele.name.split("-")[1])[0].value= document.getElementsByName("mrp-"+ele.name.split("-")[1])[0].value*l;
+
+        }
+    }
+}
+else{
+
     document.getElementsByName("ttl-"+ele.name.split("-")[1])[0].value= document.getElementsByName("mrp-"+ele.name.split("-")[1])[0].value*d;
+}
+    
     calTtlAmt();
 }
 function selectMed(ele){
@@ -285,6 +369,9 @@ function selectMed(ele){
             document.getElementsByName("bid-"+ele.name.split("-")[1])[0].value=i.batchId;
             document.getElementsByName("mrp-"+ele.name.split("-")[1])[0].value=i.mrp;
             document.getElementsByName("ttl-"+ele.name.split("-")[1])[0].value=i.mrp;
+            document.getElementsByName("up-"+ele.name.split("-")[1])[0].value=0;
+            document.getElementsByName("uph-"+ele.name.split("-")[1])[0].value=0;
+            document.getElementsByName("mqty-"+ele.name.split("-")[1])[0].value=0;
         }
     }
 calTtlAmt();

@@ -254,9 +254,16 @@ route.post("/save-bill",async(req,res)=>{
     let d=req.body;
     let b=await exe(`insert into bill(pdate,cid) values('${new Date().toISOString().slice(0,10)}','${d.cid}')`);
 
-    
+
     for(let i=0;i<d.product.length;i++){
-       let s=await exe(`insert into order_list(product,bid,mrp,qty,total,bill_id) values('${d.product[i]}','${d.bid[i]}','${d.mrp[i]}','${d.qty[i]}','${d.total[i]}','${b.insertId}')`);
+       let s=await exe(`insert into order_list(product,bid,mrp,qty,total,bill_id,up) values('${d.product[i]}','${d.bid[i]}','${d.mrp[i]}','${d.qty[i]}','${d.total[i]}','${b.insertId}','${d.up[i]}')`);
+         let qt=await exe(`select * from product where id='${d.product[i]}' `);
+         if(d.isPack[i]=='false'){         
+         let uqty=await exe(`update product set qty='${((qt[0].packing.split(" ")[0]*qt[0].qty)-d.qty[i])/qt[0].packing.split(" ")[0]}' where id='${d.product[i]}'`);
+        }
+        else{
+            let uqty=await exe(`update product set qty='${qt[0].qty-d.qty[i]}' where id='${d.product[i]}'`);
+        }
     }
     let bd=await exe(`insert into bill_det(disc,ttl,net_ttl,pmtd,psts,pmny,rmny,bill_id) values('${d.discount}','${d.ttl_amt}','${d.net_ttl}','${d.pmtd}','${d.psts}','${d.pmny}','${d.rmny}','${b.insertId}')`);
 
