@@ -205,7 +205,7 @@
         <thead>
             <tr>
                 <th>Medicine Name</th>
-                <th>Packaging</th>
+                <th>Unit Price</th>
                 <th>Quantity</th>
              
                 <th>Total</th>
@@ -217,7 +217,7 @@
             
             <tr>
                 <td><%-i.pname%></td>
-                <td><%-i.pack%></td>
+                <td>&#8377; <%-i.up%></td>
                 <td><%-i.qty%></td>
                
                 <td>&#8377; <%-i.total%></td>
@@ -238,8 +238,13 @@
     <div class="payment-section">
         <div><strong>Payment Method:</strong> <%-det.pmtd%> </div>
         <div><strong>Payment Status:</strong> <%-det.psts%></div>
+        <%if(det.psts=='Paid'){%>
+            <div><strong>Amount Paid:</strong>&#8377; <%-det.net_ttl%></div>
+            <div><strong>Remaining Amount:</strong>&#8377; <%-det.rmny%></div> 
+            <%}else{%>
         <div><strong>Amount Paid:</strong>&#8377; <%-det.pmny%></div>
         <div><strong>Remaining Amount:</strong>&#8377; <%-det.rmny%></div>
+    <%}%>
     </div>
 
     <!-- Footer with Print Button -->
