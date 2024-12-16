@@ -192,7 +192,7 @@ function sendData(){
     }
     for(let i=0;i<document.getElementsByClassName("medi").length;i++){
        let mqty=document.getElementsByClassName("mqty")[i].value;
-        if(document.getElementsByClassName("mqty")[i].value==""){
+        if(document.getElementsByClassName("mqty")[i].value==""||document.getElementsByClassName("mqty")[i].value==0){
             mqty='1';
         }
         obj.qty.push(mqty);
@@ -247,6 +247,8 @@ function addRow(ele){
                 <%}%>
             </select>
             <span style="font-size:13px" class="text-danger warn" id="emw-${j}"><i class="fa fa-warning"></i>&nbsp;This field is empty !</span>
+                           <span style="font-size:13px" class="text-warning warn" id="ots-${j}"><i class="fa fa-warning"></i>&nbsp;This item is out of stock!!</span>
+
             </td>
 
             
@@ -288,6 +290,7 @@ function addRow(ele){
                 <%}%>
             </select>
             <span style="font-size:13px" class="text-danger warn" id="emw-${j}"><i class="fa fa-warning"></i>&nbsp;This field is empty !</span>
+               <span style="font-size:13px" class="text-warning warn" id="ots-${j}"><i class="fa fa-warning"></i>&nbsp; This item is out of stock!!</span>
             </td>
 
             
@@ -369,9 +372,20 @@ function selectMed(ele){
             document.getElementsByName("bid-"+ele.name.split("-")[1])[0].value=i.batchId;
             document.getElementsByName("mrp-"+ele.name.split("-")[1])[0].value=i.mrp;
             document.getElementsByName("ttl-"+ele.name.split("-")[1])[0].value=i.mrp;
+          if(document.getElementsByName("up-"+ele.name.split("-")[1]).length!=0){
             document.getElementsByName("up-"+ele.name.split("-")[1])[0].value=0;
             document.getElementsByName("uph-"+ele.name.split("-")[1])[0].value=0;
+          }  
+         
             document.getElementsByName("mqty-"+ele.name.split("-")[1])[0].value=0;
+         
+            if(i.qty<10){
+                document.getElementById('ots-'+ele.name.split("-")[1]).style.display='block';
+            }
+            else{
+                document.getElementById('ots-'+ele.name.split("-")[1]).style.display='none';
+
+            }
         }
     }
 calTtlAmt();
