@@ -325,7 +325,35 @@ let obj={
 }
 res.render('admin/exptable.ejs',obj);
 })
-
+route.get("/total-purchase",checkAdmin,async(req,res)=>{
+    let list=await exe(`select*,(select name from vendor where product.party=vendor.id) as vendor from product `);
+    let bar=[];
+    let lastExp=0;
+    let lastm=new Date().getMonth()-1;
+    if(lastm<0){
+        lastm=11;
+    }
+    let curExp=0;
+    for(let b of list){
+        if((new Date(b.adddate).getMonth())==(new Date().getMonth())){
+            bar.push(b);
+            curExp=Number(curExp)+b.amt;
+        }
+        else if(lastm==new Date(b.adddate).getMonth()){
+            lastExp=Number(lastExp)+b.amt;
+        }
+     
+     
+    }
+    var img = await exe(`select * from userlogin`)
+    let obj={
+        'list':bar,
+        "img":img[0],
+        "lastexp":lastExp,
+        "curExp":curExp
+    }
+    res.render('admin/purtable.ejs',obj);
+})
 
 
 module.exports=route;
