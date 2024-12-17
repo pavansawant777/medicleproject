@@ -14,6 +14,7 @@
 
 <div class="col-12 p-0 text-center">
     <h2 class="text-primary ">&#8377; <%-curExp%></h2>
+    <%if(lastexp!=0){%>
     <%if((curExp-lastexp)<0){%>
         <p class="text-danger mt-3" style="font-size: 13px;">
             <i class="fa fa-arrow-trend-down"></i>
@@ -24,7 +25,7 @@
 <i class="fa fa-arrow-trend-up"></i>
 +<%-(((curExp-lastexp)/lastexp)*100).toString().split(".")[0]%> % more sells in this month.
 </p>
-        <%}%>
+        <%}}%>
  
 </div>
             </div>
