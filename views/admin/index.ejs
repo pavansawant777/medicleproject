@@ -1,74 +1,76 @@
 <!-- ! Main -->
 <%-include('navbar.ejs')%>
+<style>
+    i{
+        font-size: 25px;
+    }
+</style>
     <div class="container">
         <h2 class="main-title">Dashboard</h2>
         
         <div class="row stat-cards">
-            <div class="col-md-6 col-xl-3">
+            <div class="col-md-6 col-xl-3" >
+                <a href="/allcustomer">
+
                 <article class="stat-cards-item">
                     <div class="stat-cards-icon primary">
-                        <!-- <i class="fa-solid fa-bag-shopping"></i> -->
-                         <img src="/img/customer.png" width="80%" height="80%">
+                      <i class="fa fa-users"></i>
                     </div>
                     <div class="stat-cards-info">
                         <p class="stat-cards-info__num fs-4"><%=ttl.ttlcount%></p>
                         <p class="stat-cards-info__title">Total Customers</p>
-                        <p class="stat-cards-info__progress">
-                            <span class="stat-cards-info__profit success">
-                      
-                    </span> Latest
-                        </p>
+                       
                     </div>
                 </article>
+                </a>
             </div>
             <div class="col-md-6 col-xl-3">
+                <a href="/parties">
                 <article class="stat-cards-item">
                     <div class="stat-cards-icon warning">
-                        <!-- <i data-feather="file" aria-hidden="true"></i> -->
-                         <img src="/img/vendor.png" width="80%" height="80%">
+                        <i class="fa-solid fa-user-tie"></i>
                     </div>
                     <div class="stat-cards-info">
                         <p class="stat-cards-info__num fs-4"><%=ttp.ttlparty%></p>
                         <p class="stat-cards-info__title">Total Parties</p>
-                        <p class="stat-cards-info__progress">
-                            <span class="stat-cards-info__profit success">
-                     
-                    </span> Latest  
-                        </p>
+                       
                     </div>
                 </article>
+            </a>
             </div>
+
+
             <div class="col-md-6 col-xl-3">
+               <a href="/todays-sells">
                 <article class="stat-cards-item">
                     <div class="stat-cards-icon purple">
-                        <i data-feather="file" aria-hidden="true"></i>
+                        <i  class="fa fa-money-bills"></i>
                     </div>
                     <div class="stat-cards-info">
-                        <p class="stat-cards-info__num">1478 286</p>
-                        <p class="stat-cards-info__title">Total visits</p>
-                        <p class="stat-cards-info__progress">
-                            <span class="stat-cards-info__profit danger">
-                      <i data-feather="trending-down" aria-hidden="true"></i>1.64%
-                    </span> Last month
-                        </p>
+                        <p class="stat-cards-info__num">&#8377; <%-ttl_sell%></p>
+                        <p class="stat-cards-info__title">Todays sell</p>
+                     
                     </div>
                 </article>
+            </a>
             </div>
+
+
             <div class="col-md-6 col-xl-3">
+                <a href="/todays-expense">
+
+               
                 <article class="stat-cards-item">
                     <div class="stat-cards-icon success">
-                        <i data-feather="feather" aria-hidden="true"></i>
+                        <i class="fa-solid fa-comments-dollar"></i>
                     </div>
                     <div class="stat-cards-info">
-                        <p class="stat-cards-info__num">1478 286</p>
-                        <p class="stat-cards-info__title">Total visits</p>
-                        <p class="stat-cards-info__progress">
-                            <span class="stat-cards-info__profit warning">
-                      <i data-feather="trending-up" aria-hidden="true"></i>0.00%
-                    </span> Last month
-                        </p>
+                        <p class="stat-cards-info__num">&#8377; <%-ttl_exp%></p>
+                        <p class="stat-cards-info__title">Todays expense</p>
+                 
                     </div>
                 </article>
+            </a>
             </div>
         </div>
         <div class="row">
