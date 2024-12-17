@@ -115,7 +115,7 @@ input{
         </td>
         <td colspan="2">
             <label class="mb-2">Payment Status:</label>
-            <select type="number" onchange="setPendingStatus()" id="p-sts" class="form-control" >
+            <select type="number"  id="p-sts" class="form-control" >
                 <option disabled value="" selected>Select payment status</option>   
               <option>Paid</option>
               <option>Pending</option>
@@ -124,10 +124,10 @@ input{
         </td>
         <td colspan="2">
             <label class="mb-2">Paid Money :</label>
-            <input type="number" onkeyup="setPending()" disabled id="p-mny" class="form-control" >
+            <input type="number" onkeyup="setPending()"  id="p-mny" class="form-control" >
         </td>
         <td colspan="1">
-            <label class="mb-2">Remaing Money :</label>
+            <label class="mb-2">Return Money :</label>
             <input type="number" disabled id="r-mny" class="form-control" >
         </td>
     </tr>
@@ -247,6 +247,8 @@ function addRow(ele){
                 <%}%>
             </select>
             <span style="font-size:13px" class="text-danger warn" id="emw-${j}"><i class="fa fa-warning"></i>&nbsp;This field is empty !</span>
+                           <span style="font-size:13px" class="text-warning warn" id="ots-${j}"><i class="fa fa-warning"></i>&nbsp;This item is out of stock!!</span>
+
             </td>
 
             
@@ -288,6 +290,7 @@ function addRow(ele){
                 <%}%>
             </select>
             <span style="font-size:13px" class="text-danger warn" id="emw-${j}"><i class="fa fa-warning"></i>&nbsp;This field is empty !</span>
+               <span style="font-size:13px" class="text-warning warn" id="ots-${j}"><i class="fa fa-warning"></i>&nbsp; This item is out of stock!!</span>
             </td>
 
             
@@ -372,6 +375,14 @@ function selectMed(ele){
             document.getElementsByName("up-"+ele.name.split("-")[1])[0].value=0;
             document.getElementsByName("uph-"+ele.name.split("-")[1])[0].value=0;
             document.getElementsByName("mqty-"+ele.name.split("-")[1])[0].value=0;
+            console.log('hello');
+            if(i.qty<10){
+                document.getElementById('ots-'+ele.name.split("-")[1]).style.display='block';
+            }
+            else{
+                document.getElementById('ots-'+ele.name.split("-")[1]).style.display='none';
+
+            }
         }
     }
 calTtlAmt();
@@ -430,7 +441,7 @@ function calTtlAmt(){
         }
     }
    function setPending(){
-    $("#r-mny").val($("#net_ttl").val()-$("#p-mny").val())
+    $("#r-mny").val($("#p-mny").val()-$("#net_ttl").val())
    }
 </script>
 <%-include('footer.ejs')%>

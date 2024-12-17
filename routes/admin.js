@@ -293,7 +293,38 @@ route.get("/delete-bill/:id",checkAdmin,async(req,res)=>{
 })
 
 
+route.get("/total-exp",checkAdmin,async(req,res)=>{
 
+    let bill=await exe(`select *,(select net_ttl from bill_det where bill_det.bill_id=bill.id) as exp,(select cname from customer where customer.cid=bill.cid) as cname from bill`);
+
+    let bar=[];
+    let lastExp=0;
+    let lastm=new Date().getMonth()-1;
+    if(lastm<0){
+        lastm=11;
+    }
+    let curExp=0;
+for(let b of bill){
+    if((new Date(b.pdate).getMonth())==(new Date().getMonth())){
+        bar.push(b);
+        curExp=Number(curExp)+b.exp;
+    }
+    else if(lastm==new Date(b.pdate).getMonth()){
+        lastExp=Number(lastExp)+b.exp;
+    }
+ 
+ 
+}
+
+var img = await exe(`select * from userlogin`)
+let obj={
+    'bill':bar,
+    "img":img[0],
+    "lastexp":lastExp,
+    "curExp":curExp
+}
+res.render('admin/exptable.ejs',obj);
+})
 
 
 
