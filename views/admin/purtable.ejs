@@ -1,14 +1,18 @@
 <%-include('navbar.ejs')%>
+
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.6/css/dataTables.dataTables.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.dataTables.css">
 <style>
     input{
-        box-shadow: 0px 0px 1px 0px rgb(97, 97, 97);
+      box-shadow: 0px 0px 1px 0px black;
+      background-color: white;
     }
+  
+   
 </style>
 <div class="container p-5">
-    <div class="row">
-        <h4 class="text-center">Total Sells of this month</h4>
+    <div class="row " style="overflow-x: scroll;">
+        <h4 class="text-center">Total Expense of this month</h4>
         <div class="col-md-3 mb-3 mt-3 alert alert-primary">
             <div class="row">
 
@@ -18,12 +22,12 @@
     <%if((curExp-lastexp)<0){%>
         <p class="text-danger mt-3" style="font-size: 13px;">
             <i class="fa fa-arrow-trend-down"></i>
-            <%-(((curExp-lastexp)/lastexp)*100).toString().split(".")[0]%> % less sells in this month.
+            <%-(((curExp-lastexp)/lastexp)*100).toString().split(".")[0]%> % less expense in this month.
             </p>
         <%}else{%>
 <p class="text-success mt-3" style="font-size: 13px;">
 <i class="fa fa-arrow-trend-up"></i>
-+<%-(((curExp-lastexp)/lastexp)*100).toString().split(".")[0]%> % more sells in this month.
++<%-(((curExp-lastexp)/lastexp)*100).toString().split(".")[0]%> % more expense in this month.
 </p>
         <%}}%>
  
@@ -32,51 +36,58 @@
            
             
         </div>
-        <table id="example" class="display  nowrap" style="width:100%">
+
+        <table id="example" class="display nowrap table table-striped table-primary" style="width:100%">
             <thead>
-                <tr >
-                    <th></th>
-                    <th class="">Bill Id</th>
-                    <th class="">Customer Name</th>
-                    <th class="">Total</th>
-                    <th class="">Date</th>
+                <tr>
+                  
+                    <th>Name</th>
+                    <th>Batch Id</th>
+                    <th>Quantity</th>
                  
-                    <th class=""> </th>
+                             <th>Amount</th>
+                    <th>Import Date</th>
+                  
+                    <th></th>
+            
                 </tr>
             </thead>
-          <tbody>
-            <% for(let i of bill){%>
-                <tr>
-                    <td><a href="/invoice/<%-i.id%>" class="text-primary"><i class="fa fa-eye"></i></a></td>
-                    <td class=""><%-'INV-000'+i.id%></td>
-                    <td><%-i.cname%></td>
-                    <td>&#8377; <%-i.exp%></td>
-                    <td class=""><%-i.pdate%></td>
+            <tbody>
+                <%for(let i of list){%>
+                 <tr>
+              
+                    <td><%-i.pname%></td>
+                    <td><%-i.batchId%></td>
+                    <td><%-i.qty%></td>
+                 
+                    <td><%-i.amt%></td>
+                    <td><%-i.adddate%></td>
                     
-                    <td><a  onclick="deleteData1('<%-i.id%>')" class="text-danger"><i class="fa fa-trash"></i></a>
-                    </td>
-      
+                    <td><a style="cursor: pointer;" onclick="deleteData('<%-i.id%>')" class="text-danger"><i class="fa fa-trash"></i></a></td>
+ 
+
                 </tr>
-                
                 <%}%>
-          </tbody>
-            <tfoot>
-          
-            </tfoot>
+             
+            </tbody>
+      
         </table>
     </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 <script>
-    function deleteData1(id){
-        let r = confirm('Want to delete Data ?');
-if(r==true){
-        location.href='/delete-bill/'+id
+   function deleteData(ele){
+    let r=confirm('Delete Data ?')
+    if(r==true){
+        location.href="/delete-product/"+ele
     }
-
-}
-
+   }
+    
+    
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+
 <script src="https://cdn.datatables.net/2.0.6/js/dataTables.js"></script>
 <script src="https://cdn.datatables.net/buttons/3.0.2/js/dataTables.buttons.js"></script>
 <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.dataTables.js"></script>
@@ -94,7 +105,11 @@ if(r==true){
         }
     }
 });
-</script>
 
+</script>
+<script type="text/javascript">
+	
+
+</script>
 
 <%-include('footer.ejs')%>

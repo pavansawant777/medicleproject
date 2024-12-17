@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invoice</title>
+    <script src="https://kit.fontawesome.com/00aea3e468.js" crossorigin="anonymous"></script>
     <style>
         /* General Styles */
         body {
@@ -129,7 +130,7 @@
             margin-top: 30px;
         }
 
-        .footer button {
+        .footer .mtn1{
             padding: 12px 20px;
             background-color: #3498db;
             color: #fff;
@@ -138,15 +139,19 @@
             border-radius: 4px;
             cursor: pointer;
         }
-.go-bck{
-    padding: 12px 20px;
+
+        .mtn{
             background-color: #3498db;
             color: #fff;
-            font-size: 16px;
+            padding: 5px 10px 5px 10px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-}
+            margin-top: 10px;
+        }
+
+
+
         .footer button:hover {
             background-color: #2980b9;
         }
@@ -177,12 +182,18 @@
                 align-items: flex-end;
             }
         }
+
+        @media print {
+            .mtn ,.mtn1{
+                display: none;
+            }            
+        }
     </style>
 </head>
 <body>
 
 <div class="invoice-container">
-<a class="go-bck" href="/bill-list">Go Back</a>
+
     <!-- Header -->
     <div class="header">
         <div class="logo">
@@ -255,7 +266,10 @@
 
     <!-- Footer with Print Button -->
     <div class="footer">
-        <button onclick="pr()">Print Invoice</button>
+        <button class=" btn btn-primary p-5 mtn1" onclick="window.print()">Print Invoice</button> <br>
+        <a href="/sale-product">
+            <button class="btn btn-sm mtn"><i class="fa-solid fa-chevron-left"></i></button>
+        </a>
     </div>
 
 </div>
@@ -269,7 +283,7 @@
             margin: 0;
             padding: 0;
             background-color: #f4f7fb;
-            color: #333;
+            color: #333
         }
 
         .invoice-container {
@@ -395,6 +409,7 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
+
         }
 
         .footer button:hover {
@@ -427,7 +442,25 @@
                 align-items: flex-end;
             }
         }
+
+        @media print {
+ 
+  .mtn{
+    visibility: hidden;
+  }
+  .mtn1{
+    visibility: hidden;
+  }
+}
     </style>
+
+</head>
+<body>
+    
+
+<div class="invoice-container" id="printableArea">
+=======
+>>>>>>> b56d9235fa8e70073b5f804791c98aab172a51e6
     <!-- Header -->
     <div class="header">
         <div class="logo">
@@ -500,7 +533,16 @@
 
     <!-- Footer with Print Button -->
     <div class="footer">
+
+        <button class="mtn1" onclick="window.print()">Print Invoice</button><br>
+        
+        <a href="/sale-product">
+            <button class="btn btn-sm btn-primary fs-5 mtn"><i class="fa-solid fa-house"></i></button>
+        </a>
+
+=======
         <button onclick="pr()">Print Invoice</button>
+>>>>>>> b56d9235fa8e70073b5f804791c98aab172a51e6
     </div>
 
 </div>`);
@@ -511,3 +553,4 @@ print();
 </script>
 </body>
 </html>
+

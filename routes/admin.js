@@ -62,8 +62,21 @@ route.get("/",checkAdmin,async(req,res)=>{
     var img = await exe(`select * from userlogin `)
     var ttl = await exe(`select count(*) as ttlcount from customer`)
     var ttp = await exe(`select count(*) as ttlparty from vendor`)
-
-    var obj={"img":img[0],"ttl":ttl[0],"ttp":ttp[0]}
+    let tsell=await exe(`select *,(select net_ttl from bill_det where bill_det.bill_id=bill.id) as exp from bill`);
+    let texp=await exe(`select*from product`);
+   let ttl_sell=0;
+   let ttl_exp=0;
+   for(let i of tsell){
+    if(new Date(i.pdate).toISOString().slice(0,10)==new Date().toISOString().slice(0,10)){
+        ttl_sell=Number(ttl_sell)+Number(i.exp);
+    }
+   }
+   for(let i of texp){
+    if(new Date(i.adddate).toISOString().slice(0,10)==new Date().toISOString().slice(0,10)){
+        ttl_exp=Number(ttl_exp)+Number(i.amt);
+   }
+   }
+    var obj={"img":img[0],"ttl":ttl[0],"ttp":ttp[0],"ttl_sell":ttl_sell,"ttl_exp":ttl_exp};
 
   
 
@@ -325,7 +338,73 @@ let obj={
 }
 res.render('admin/exptable.ejs',obj);
 })
+route.get("/total-purchase",checkAdmin,async(req,res)=>{
+    let list=await exe(`select*,(select name from vendor where product.party=vendor.id) as vendor from product `);
+    let bar=[];
+    let lastExp=0;
+    let lastm=new Date().getMonth()-1;
+    if(lastm<0){
+        lastm=11;
+    }
+    let curExp=0;
+    for(let b of list){
+        if((new Date(b.adddate).getMonth())==(new Date().getMonth())){
+            bar.push(b);
+            curExp=Number(curExp)+b.amt;
+        }
+        else if(lastm==new Date(b.adddate).getMonth()){
+            lastExp=Number(lastExp)+b.amt;
+        }
+     
+     
+    }
+    var img = await exe(`select * from userlogin`)
+    let obj={
+        'list':bar,
+        "img":img[0],
+        "lastexp":lastExp,
+        "curExp":curExp
+    }
+    res.render('admin/purtable.ejs',obj);
+})
 
-
-
+route.get("/todays-sells",checkAdmin,async(req,res)=>{
+    let bill=await exe(`select *,(select net_ttl from bill_det where bill_det.bill_id=bill.id) as exp,(select cname from customer where customer.cid=bill.cid) as cname from bill`);
+    let bar=[];
+    for(let b of bill){
+        if((new Date(b.pdate).toISOString().slice(0,10))==(new Date().toISOString().slice(0,10))){
+            bar.push(b);
+          
+        }
+       
+     
+     
+    }
+    var img = await exe(`select * from userlogin`)
+    let obj={
+        'bill':bar,
+        "img":img[0],
+    }
+    res.render("admin/todayssells.ejs",obj);
+})
+route.get("/todays-expense",checkAdmin,async(req,res)=>{
+   
+    let list=await exe(`select*,(select name from vendor where product.party=vendor.id) as vendor from product `);
+   let bar=[];
+    for(let b of list){
+        if((new Date(b.adddate).toISOString().slice(0,10))==(new Date().toISOString().slice(0,10))){
+            bar.push(b);
+         
+        }
+       
+     
+     
+    }
+    var img = await exe(`select * from userlogin`)
+    let obj={
+        'list':bar,
+        "img":img[0],
+    }
+    res.render("admin/todayspruchase.ejs",obj);
+})
 module.exports=route;

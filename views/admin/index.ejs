@@ -1,9 +1,15 @@
 <!-- ! Main -->
 <%-include('navbar.ejs')%>
+<style>
+    i{
+        font-size: 25px;
+    }
+</style>
     <div class="container">
         <h2 class="main-title">Dashboard</h2>
 
         <div class="row stat-cards">
+<<<<<<< HEAD
             <div class="col-md-6 col-xl-2">
                 <article class="stat-cards-item">
                     <div class="stat-cards-icon purple">
@@ -19,9 +25,54 @@
                             <span class="stat-cards-info__profit danger">
                      
                         </p>
+=======
+            <div class="col-md-6 col-xl-3" >
+                <a href="/allcustomer">
+
+                <article class="stat-cards-item">
+                    <div class="stat-cards-icon primary">
+                      <i class="fa fa-users"></i>
+                    </div>
+                    <div class="stat-cards-info">
+                        <p class="stat-cards-info__num fs-4"><%=ttl.ttlcount%></p>
+                        <p class="stat-cards-info__title">Total Customers</p>
+                       
                     </div>
                 </article>
+                </a>
             </div>
+            <div class="col-md-6 col-xl-3">
+                <a href="/parties">
+                <article class="stat-cards-item">
+                    <div class="stat-cards-icon warning">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <div class="stat-cards-info">
+                        <p class="stat-cards-info__num fs-4"><%=ttp.ttlparty%></p>
+                        <p class="stat-cards-info__title">Total Parties</p>
+                       
+                    </div>
+                </article>
+            </a>
+            </div>
+
+
+            <div class="col-md-6 col-xl-3">
+               <a href="/todays-sells">
+                <article class="stat-cards-item">
+                    <div class="stat-cards-icon purple">
+                        <i  class="fa fa-money-bills"></i>
+                    </div>
+                    <div class="stat-cards-info">
+                        <p class="stat-cards-info__num">&#8377; <%-ttl_sell%></p>
+                        <p class="stat-cards-info__title">Todays sell</p>
+                     
+>>>>>>> b266e2ef44162bb15dfcfdbd3aff167155adeb2c
+                    </div>
+                </article>
+            </a>
+            </div>
+<<<<<<< HEAD
             <div class="col-md-6 col-xl-2">
                 <article class="stat-cards-item">
                     <div class="stat-cards-icon purple">
@@ -118,8 +169,25 @@
                             <span class="stat-cards-info__profit danger">
                       
                         </p>
+=======
+
+
+            <div class="col-md-6 col-xl-3">
+                <a href="/todays-expense">
+
+               
+                <article class="stat-cards-item">
+                    <div class="stat-cards-icon success">
+                        <i class="fa-solid fa-comments-dollar"></i>
+                    </div>
+                    <div class="stat-cards-info">
+                        <p class="stat-cards-info__num">&#8377; <%-ttl_exp%></p>
+                        <p class="stat-cards-info__title">Todays expense</p>
+                 
+>>>>>>> b266e2ef44162bb15dfcfdbd3aff167155adeb2c
                     </div>
                 </article>
+            </a>
             </div>
         </div>
 

@@ -8,30 +8,8 @@
 </style>
 <div class="container p-5">
     <div class="row">
-        <h4 class="text-center">Total Sells of this month</h4>
-        <div class="col-md-3 mb-3 mt-3 alert alert-primary">
-            <div class="row">
+        <h4 class="text-center">Total Sells of today</h4>
 
-<div class="col-12 p-0 text-center">
-    <h2 class="text-primary ">&#8377; <%-curExp%></h2>
-    <%if(lastexp!=0){%>
-    <%if((curExp-lastexp)<0){%>
-        <p class="text-danger mt-3" style="font-size: 13px;">
-            <i class="fa fa-arrow-trend-down"></i>
-            <%-(((curExp-lastexp)/lastexp)*100).toString().split(".")[0]%> % less sells in this month.
-            </p>
-        <%}else{%>
-<p class="text-success mt-3" style="font-size: 13px;">
-<i class="fa fa-arrow-trend-up"></i>
-+<%-(((curExp-lastexp)/lastexp)*100).toString().split(".")[0]%> % more sells in this month.
-</p>
-        <%}}%>
- 
-</div>
-            </div>
-           
-            
-        </div>
         <table id="example" class="display  nowrap" style="width:100%">
             <thead>
                 <tr >
