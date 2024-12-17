@@ -110,13 +110,20 @@
     </tr>
    
 </tfoot>
-
+<tfoot>
+    <td colspan="6"></td>
+    <td colspan="3">
+        Net Total :
+<input class="form-control" id="net_ttl" readonly/>
+    </td>
+</tfoot>
 <tfoot>
     <td colspan="9 text-center">
      <b><i class="fa fa-user"></i>&nbsp; Party Details</b>
 
     </td>
 </tfoot>
+
 
         </table>
        </div>
@@ -178,10 +185,10 @@ function selectVendor(){
     </td>    
 <td><input type="text" name="pbatchid" class="form-control shadow-none"  placeholder="Batch Id"></td> 
 <td>   <input type="month" name="pexp" class="form-control shadow-none" ></td> 
-<td>   <input type="number" name="pqty" placeholder="Quantity" id="qty" onkeyup="total()" class="form-control shadow-none" ></td> 
-<td>          <input type="number" placeholder="MRP" name="pmrp" class="form-control shadow-none" ></td> 
-<td>          <input type="number" placeholder="Rate" name="prate" id="rate" onkeyup="total()" class="form-control shadow-none" ></td> 
-<td>          <input type="number" placeholder="Amount" name="pamt" id="tot" onkeyup="total()" class="form-control shadow-none" readonly ></td> 
+<td>   <input type="number" name="pqty" placeholder="Quantity" id="qty-${i}" onkeyup="total(this)" class="form-control shadow-none" ></td> 
+<td>          <input type="number" placeholder="MRP" name="pmrp" id="mrp-${i}"  class="form-control shadow-none" onkeyup="total(this)" ></td> 
+<td>          <input type="number" placeholder="Rate" name="prate" id="rate-${i}" onkeyup="total(this)" class="form-control shadow-none" ></td> 
+<td>          <input type="number" placeholder="Amount" name="pamt" id="tot-${i}"  class="form-control shadow-none" readonly ></td> 
 <td><button class="btn btn-danger" onClick="delRow()"><i class="fa fa-trash"></i></button></td>
 </tr>`);
 checkSave();   
@@ -268,13 +275,21 @@ else{
     location.reload();
   }
 
-  function total(){
-    var q=document.getElementById('qty').value;
-  var r=document.getElementById('rate').value;
+  function total(ele){
+ 
+    var q=document.getElementById('qty-'+ele.id.split("-")[1]).value;
+  var r=document.getElementById('rate-'+ele.id.split("-")[1]).value;
 
   var tot = Number(q)*Number(r);
 
-  document.getElementById('tot').value=tot;
+  document.getElementById('tot-'+ele.id.split("-")[1]).value=tot;
+  let net_ttl=0;
+  let pamt=document.getElementsByName("pamt");
+
+  for(let i of pamt){
+    net_ttl=Number(net_ttl)+Number(i.value);
+  }
+  document.getElementById("net_ttl").value=net_ttl; 
   }
 
     </script>
