@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invoice</title>
+    <script src="https://kit.fontawesome.com/00aea3e468.js" crossorigin="anonymous"></script>
     <style>
         /* General Styles */
         body {
@@ -129,7 +130,7 @@
             margin-top: 30px;
         }
 
-        .footer button {
+        .footer .mtn1{
             padding: 12px 20px;
             background-color: #3498db;
             color: #fff;
@@ -138,6 +139,18 @@
             border-radius: 4px;
             cursor: pointer;
         }
+<<<<<<< HEAD
+        .mtn{
+            background-color: #3498db;
+            color: #fff;
+            padding: 5px 10px 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            
+
+=======
 .go-bck{
     padding: 12px 20px;
             background-color: #3498db;
@@ -395,6 +408,7 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
+>>>>>>> b56d9235fa8e70073b5f804791c98aab172a51e6
         }
 
         .footer button:hover {
@@ -427,7 +441,25 @@
                 align-items: flex-end;
             }
         }
+
+        @media print {
+ 
+  .mtn{
+    visibility: hidden;
+  }
+  .mtn1{
+    visibility: hidden;
+  }
+}
     </style>
+<<<<<<< HEAD
+</head>
+<body>
+    
+
+<div class="invoice-container" id="printableArea">
+=======
+>>>>>>> b56d9235fa8e70073b5f804791c98aab172a51e6
     <!-- Header -->
     <div class="header">
         <div class="logo">
@@ -500,7 +532,16 @@
 
     <!-- Footer with Print Button -->
     <div class="footer">
+<<<<<<< HEAD
+        <button class="mtn1" onclick="window.print()">Print Invoice</button><br>
+        
+        <a href="/sale-product">
+            <button class="btn btn-sm btn-primary fs-5 mtn"><i class="fa-solid fa-house"></i></button>
+        </a>
+
+=======
         <button onclick="pr()">Print Invoice</button>
+>>>>>>> b56d9235fa8e70073b5f804791c98aab172a51e6
     </div>
 
 </div>`);
@@ -511,3 +552,4 @@ print();
 </script>
 </body>
 </html>
+
