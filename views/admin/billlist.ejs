@@ -22,12 +22,14 @@
                 </tr>
             </thead>
           <tbody>
+            <% sum = 0  %>
             <% for(let i of bill){%>
+                <%sum+= i.ttl %>
                 <tr>
                     <td><a href="/invoice/<%-i.id%>" class="text-primary"><i class="fa fa-eye"></i></a></td>
                     <td class=""><%-'INV-000'+i.id%></td>
                     <td><%-i.cname%></td>
-                    <td>&#8377; <%-i.ttl%></td>
+                    <td id="tot">&#8377; <%-i.ttl%></td>
                     <td class=""><%-i.pdate%></td>
                     
                     <td><a  onclick="deleteData1('<%-i.id%>')" class="text-danger"><i class="fa fa-trash"></i></a>
@@ -36,9 +38,16 @@
                 </tr>
                 
                 <%}%>
+
+                
+
+                
           </tbody>
             <tfoot>
-          
+                <td colspan="4" class="text-end border-top-1">Total: <input type="text" class="text-center" value="<%-sum%>" readonly> </td>
+                
+                <td></td>
+                <td></td>
             </tfoot>
         </table>
     </div>
@@ -71,5 +80,8 @@ if(r==true){
         }
     }
 });
+
+
+
 </script>
 <%-include('footer.ejs')%>
