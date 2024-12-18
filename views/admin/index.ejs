@@ -1,10 +1,10 @@
 <!-- ! Main -->
 <%-include('navbar.ejs')%>
-<style>
-    i{
-        font-size: 25px;
-    }
-</style>
+    <style>
+        i {
+            font-size: 25px;
+        }
+    </style>
     <div class="container">
         <h2 class="main-title">Dashboard</h2>
 
@@ -143,11 +143,42 @@
 
                 </article>
             </div>
+			<div class="col-md-6 col-xl-2 mt-2">
+                <article class="stat-cards-item">
+                    <div class="stat-cards-icon purple">
+                        <!-- <i data-feather="file" aria-hidden="true"></i> -->
+						<i class="fa-solid fa-circle-xmark fs-1"></i> 
+					                    </div>
+                    <div class="stat-cards-info">
+                        <p class="stat-cards-info__num">10</p>
+                        <p class="stat-cards-info__title">Out Of Stock  </p>
+                        <p class="stat-cards-info__progress">
+                            <span class="stat-cards-info__profit danger">
+                      
+                        </p>
+                    </div>
+                </article>
+            </div>
+			<div class="col-md-6 col-xl-2 mt-2">
+                <article class="stat-cards-item">
+                    <div class="stat-cards-icon purple">
+                        <!-- <i data-feather="file" aria-hidden="true"></i> -->
+						<i class="fa-solid fa-trash fs-1"></i>  
+                    </div>
+                    <div class="stat-cards-info">
+                        <p class="stat-cards-info__num">45</p>
+                        <p class="stat-cards-info__title">Expired medicine</p>
+                        <p class="stat-cards-info__progress">
+                            <span class="stat-cards-info__profit danger">
+                      
+                        </p>
+                    </div>
+                </article>
+            </div>
 
-			<div class="col-md-6 col-xl-2 mt-2 py-2">
+			<!-- <div class="col-md-6 col-xl-2 mt-2 py-2">
                 <article class="stat-cards-item">
                     <div class="stat-cards-icon purple mb-2">
-                        <!-- <i data-feather="file" aria-hidden="true"></i> -->
 						<i class="fa-solid fa-circle-xmark fs-1"></i>                     </div>
                     <div class="stat-cards-info">
                         <p class="stat-cards-info__num">2</p>
@@ -162,8 +193,8 @@
 			<div class="col-md-6 col-xl-2 mt-2 py-2">
                 <article class="stat-cards-item">
                     <div class="stat-cards-icon purple mb-2">
-                        <!-- <i data-feather="file" aria-hidden="true"></i> -->
-						<i class="fa-solid fa-trash fs-1"></i>                    </div>
+						<i class="fa-solid fa-trash fs-1"></i>  
+                  </div>
                     <div class="stat-cards-info">
                         <p class="stat-cards-info__num">34</p>
                         <p class="stat-cards-info__title">Expired medicine</p>
@@ -171,10 +202,10 @@
                             <span class="stat-cards-info__profit danger">
                       
                         </p>
+ -->
 
 
-
-            <div class="col-md-6 col-xl-3">
+            <!-- <div class="col-md-6 col-xl-3">
                 <a href="/todays-expense">
 
                
@@ -190,10 +221,13 @@
                     </div>
                 </article>
             </a>
-            </div>
+            </div> -->
+
+
         </div>
 
 		<hr style="height:3px; border-width:0; color:red; background-color:red">
+
 
         <div class="row">
             <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
@@ -203,6 +237,7 @@
 		
 
     </div>
+
 
     <script>
         const xValues = [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150];
