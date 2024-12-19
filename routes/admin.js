@@ -407,4 +407,49 @@ route.get("/todays-expense",checkAdmin,async(req,res)=>{
     }
     res.render("admin/todayspruchase.ejs",obj);
 })
+route.get("/add-note",checkAdmin,async(req,res)=>{
+    var img = await exe(`select * from userlogin`)
+    let obj={
+    
+        "img":img[0],
+    }
+    res.render("admin/addnote.ejs",obj);
+    
+})
+route.post("/save-note",async(req,res)=>{
+   let d=req.body;
+   let b=await exe(`insert into notes(name,mobile,person,address,payment_type,amount,notify,note,isRead) value('${d.name}','${d.mobile}','${d.person}','${d.add}',
+    '${d.payment_type}','${d.amount}','${d.notification}','${d.note}','${'false'}')`);
+    res.redirect("/add-note");
+
+})
+route.get("/get-notes",checkAdmin,async(req,res)=>{
+let d=await exe(`select*from notes`);
+let got=0,give=0;
+let noti=[];
+for(let i of d){
+if(i.payment_type=='true'){
+got=Number(got)+Number(i.amount);
+if(new Date(i.notify).toISOString().slice(0,10)==new Date().toISOString().slice(0,10)){
+noti.push(i);
+}
+}
+else if(i.payment_type=='false'){
+give=Number(give)+Number(i.amount);
+if(new Date(i.notify).toISOString().slice(0,10)==new Date().toISOString().slice(0,10)){
+    noti.push(i);
+    }
+}
+
+}
+var img = await exe(`select * from userlogin`)
+let obj={
+    "data":d,
+    "got":got,
+    "give":give,
+    "noti":noti,
+    "img":img[0]
+}
+res.render("admin/notes.ejs",obj);
+})
 module.exports=route;
