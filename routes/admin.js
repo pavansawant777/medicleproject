@@ -64,7 +64,7 @@ route.get("/",checkAdmin,async(req,res)=>{
     var ttp = await exe(`select count(*) as ttlparty from vendor`)
     let tsell=await exe(`select *,(select net_ttl from bill_det where bill_det.bill_id=bill.id) as exp from bill`);
     let texp=await exe(`select*from product`);
-   let ttl_sell=0;
+    let ttl_sell=0;
    let ttl_exp=0;
    for(let i of tsell){
     if(new Date(i.pdate).toISOString().slice(0,10)==new Date().toISOString().slice(0,10)){
