@@ -58,13 +58,14 @@ return true;
    
 </style>
 <div class="container p-5">
+    <h3 class="text-center mb-4">All Stocks</h3>
     <div class="row border p-4 rounded" style="overflow-x: scroll;">
        
 
         <table id="example" class="display nowrap table table-striped table-primary" style="width:100%">
             <thead>
                 <tr>
-                  <th></th>
+                  
                     <th>Name</th>
                     <th>Vendor</th>
                     <th>Batch Id</th>
@@ -74,7 +75,7 @@ return true;
                     <th>Rate </th>
                     <th>Amount</th>
                     <th>Import Date</th>
-                   
+                    <th>Expriry Date</th>
                     <th></th>
             
                 </tr>
@@ -82,20 +83,22 @@ return true;
             <tbody>
                 <%for(let i of p){%>
                  <tr>
-              <td><a href="/purchase-inv/<%-i.p_billid%>" class="btn btn-primary">view bill</a></td>
+              
                     <td><%-i.pname%></td>
                     <td>
                     <a class="text-primary" href="/show-party/<%-i.party%>"  ><%-i.party_name%><sup><i class="fa fa-circle-info"></i></sup></a>
                     
                     </td>
-                    <td><%-i.batchId%></td>
+                    <td><%-i.batchid%></td>
                     <td><%-i.packing%></td>
                     <td><%-i.qty%></td>
                     <td><%-i.mrp%></td>
                     <td><%-i.rate%></td>
                     <td><%-i.amt%></td>
                     <td><%-i.adddate%></td>
-                   
+                    <td>
+                        <button id="<%-(i.isExpired==0)?((checkExpiry( i.exp))?'blinking-button':'mybtn'):'exp-btn'%>"></button>
+                        <%-i.exp%></td>
                     <td><a style="cursor: pointer;" onclick="deleteData('<%-i.id%>')" class="text-danger"><i class="fa fa-trash"></i></a></td>
  
 

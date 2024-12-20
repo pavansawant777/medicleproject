@@ -369,7 +369,7 @@ function selectMed(ele){
     let ar=<%- JSON.stringify(med) %>;
     for(let i of ar){
         if(i.id==ele.value){
-            document.getElementsByName("bid-"+ele.name.split("-")[1])[0].value=i.batchId;
+            document.getElementsByName("bid-"+ele.name.split("-")[1])[0].value=i.batchid;
             document.getElementsByName("mrp-"+ele.name.split("-")[1])[0].value=i.mrp;
             document.getElementsByName("ttl-"+ele.name.split("-")[1])[0].value=i.mrp;
             document.getElementsByName("up-"+ele.name.split("-")[1])[0].value=0;

@@ -221,6 +221,7 @@ else{
         "rate":[],
         "amt":[],
         "vid":vid,
+        "ttl":document.getElementById("net_ttl").value,
     }
     let pname=document.getElementsByName("pname");
     let ppacking=document.getElementsByName("ppacking");
@@ -230,7 +231,7 @@ else{
     let pmrp=document.getElementsByName("pmrp");
     let prate=document.getElementsByName("prate");
     let pamt=document.getElementsByName("pamt");
-
+    
 
     for(let n of pname){
         obj.pname.push(n.value);
@@ -264,6 +265,7 @@ else{
   $.ajax({"url":"/save-purchase","method":"post","data":obj}).done((res)=>{
       if(res){
           document.getElementById("alert").click();
+          location.href='/purchase-inv/'+res
       }
   })
     }

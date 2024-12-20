@@ -11,7 +11,7 @@ else{
 }
 }
 let expireMed=async()=>{
-let med=await exe(`select*from product`);
+let med=await exe(`select*from stocks`);
 for(let i of med){
 
 
@@ -27,7 +27,7 @@ let nm=ns/60;
 let nh=nm/60;
 let nd=nh/24;
 if(Math.floor(ed-nd)==0){
-    let update=await exe(`update product set isExpired='${1}' where id='${i.id}'`);
+    let update=await exe(`update stocks set isExpired='${1}' where id='${i.id}'`);
     }
 }
         
@@ -237,12 +237,31 @@ route.post("/save-purchase",async(req,res)=>{
     let x=req.body;
     let par=await exe(`select*from vendor where id='${x.vid}'`);
     let pcount=await exe(`update vendor set ttl_purchases=${par[0].ttl_purchases+1} where id='${x.vid}'`);
+    let pbill=await exe(`insert into product_bill(vendor,idate,total) values('${x.vid}','${new Date().toISOString().slice(0,10)}','${x.ttl}')`);
+
     for(let i=0;i<x.pname.length;i++){
-        let d=await exe(`insert into product(pname,packing,batchid,exp,qty,mrp,rate,amt,adddate,isexpired,party) values('${x.pname[i]}','${x.packing[i]}','${x.bid[i]}','${x.exp[i]}','${x.qty[i]}','${x.mrp[i]}','${x.rate[i]}','${x.amt[i]}','${new Date().toISOString().slice(0,10)}','${false}','${req.body.vid}')`);
+        let d=await exe(`insert into product(pname,packing,batchid,exp,qty,mrp,rate,amt,adddate,isexpired,party,p_billid) values('${x.pname[i]}','${x.packing[i]}','${x.bid[i]}','${x.exp[i]}','${x.qty[i]}','${x.mrp[i]}','${x.rate[i]}','${x.amt[i]}','${new Date().toISOString().slice(0,10)}','${false}','${req.body.vid}','${pbill.insertId}')`);
+        await exe(`insert into stocks(pname,packing,batchid,exp,qty,mrp,rate,amt,adddate,isExpired,party) values('${x.pname[i]}','${x.packing[i]}','${x.bid[i]}','${x.exp[i]}','${x.qty[i]}','${x.mrp[i]}','${x.rate[i]}','${x.amt[i]}','${new Date().toISOString().slice(0,10)}','${false}','${req.body.vid}')`);
+   
     }
-    res.send(true);
+    res.send(pbill.insertId+"");
 
 
+})
+route.get("/purchase-inv/:id",checkAdmin,async(req,res)=>{
+let bill_d=await exe(`select*,(select name from vendor where vendor.id=product_bill.vendor) as vname from product_bill where id='${req.params.id}'`)
+let prod=await exe(`select*from product where p_billid='${req.params.id}'`);
+let obj={
+    "b_data":bill_d[0],
+    "prod":prod
+}
+res.render("admin/productbillinv.ejs",obj);
+})
+route.get("/stocks",checkAdmin,async(req,res)=>{
+    var img = await exe(`select * from userlogin`);
+    let stocks=await exe(`select*,(select name from vendor where vendor.id=stocks.party) as party_name from stocks`);
+    var obj = {"img":img[0],"p":stocks};
+    res.render("admin/stockslist.ejs",obj);
 })
 route.get("/all-purchases",checkAdmin,async(req,res)=>{
     var img = await exe(`select * from userlogin`)
@@ -259,7 +278,7 @@ res.redirect("/all-purchases");
 route.get("/sale-product",checkAdmin,async(req,res)=>{
     var img = await exe(`select * from userlogin`)
     let cust=await exe('select*from customer');
-    let med=await exe(`select*from product where isExpired=${0}`)
+    let med=await exe(`select*from stocks where isExpired=${0} and qty!=0`)
     var obj = {"img":img[0],'c':cust,"med":med};
     res.render('admin/saleproduct.ejs',obj);
 })
@@ -270,12 +289,12 @@ route.post("/save-bill",async(req,res)=>{
 
     for(let i=0;i<d.product.length;i++){
        let s=await exe(`insert into order_list(product,bid,mrp,qty,total,bill_id,up) values('${d.product[i]}','${d.bid[i]}','${d.mrp[i]}','${d.qty[i]}','${d.total[i]}','${b.insertId}','${d.up[i]}')`);
-         let qt=await exe(`select * from product where id='${d.product[i]}' `);
+         let qt=await exe(`select * from stocks where id='${d.product[i]}' `);
          if(d.isPack[i]=='false'){         
-         let uqty=await exe(`update product set qty='${((qt[0].packing.split(" ")[0]*qt[0].qty)-d.qty[i])/qt[0].packing.split(" ")[0]}' where id='${d.product[i]}'`);
+         let uqty=await exe(`update stocks set qty='${((qt[0].packing.split(" ")[0]*qt[0].qty)-d.qty[i])/qt[0].packing.split(" ")[0]}' where id='${d.product[i]}'`);
         }
         else{
-            let uqty=await exe(`update product set qty='${qt[0].qty-d.qty[i]}' where id='${d.product[i]}'`);
+            let uqty=await exe(`update stocks set qty='${qt[0].qty-d.qty[i]}' where id='${d.product[i]}'`);
         }
     }
     let bd=await exe(`insert into bill_det(disc,ttl,net_ttl,pmtd,psts,pmny,rmny,bill_id) values('${d.discount}','${d.ttl_amt}','${d.net_ttl}','${d.pmtd}','${d.psts}','${d.pmny}','${d.rmny}','${b.insertId}')`);
@@ -287,7 +306,7 @@ route.get("/invoice/:id",checkAdmin,async(req,res)=>{
 
     let bill= await exe(`select* from bill where id='${req.params.id}'`);
     let cus=await exe(`select*from customer where cid='${bill[0].cid}'`)
-    let med=await exe(`select*,(select pname from product where order_list.product=product.id)as pname,(select packing from product where order_list.product=product.id)as pack from order_list where bill_id='${req.params.id}'`);
+    let med=await exe(`select*,(select pname from stocks where order_list.product=stocks.id)as pname,(select packing from stocks where order_list.product=stocks.id)as pack from order_list where bill_id='${req.params.id}'`);
     let det=await exe(`select*from bill_det where bill_id='${req.params.id}'`);
     var img = await exe(`select * from userlogin`)
     var obj = {"img":img[0],"cus":cus[0],'bill':bill[0],"med":med,'det':det[0]};
@@ -451,5 +470,21 @@ let obj={
     "img":img[0]
 }
 res.render("admin/notes.ejs",obj);
+})
+route.get("/view-vendor-order/:id",checkAdmin,async(req,res)=>{
+    let d=await exe(`select * from product_bill where vendor='${req.params.id}'`)
+    let ven=await exe(`select*from vendor where id='${req.params.id}'`);
+    var img = await exe(`select * from userlogin`)
+    let obj={
+        "data":d,
+        "img":img[0],
+        "v":ven[0]
+    } 
+res.render("admin/viewvendororder.ejs",obj);
+
+})
+route.get("/delete-purchase-bill/:bid/:vid",checkAdmin,async(req,res)=>{
+    let d=await exe(`delete from product_bill where id='${req.params.bid}' `);
+    res.redirect("/view-vendor-order/"+req.params.vid);
 })
 module.exports=route;
