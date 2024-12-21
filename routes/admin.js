@@ -235,12 +235,14 @@ res.render("admin/purchase.ejs",obj);
 route.post("/save-purchase",async(req,res)=>{
   
     let x=req.body;
+    
     let par=await exe(`select*from vendor where id='${x.vid}'`);
     let pcount=await exe(`update vendor set ttl_purchases=${par[0].ttl_purchases+1} where id='${x.vid}'`);
     let pbill=await exe(`insert into product_bill(vendor,idate,total) values('${x.vid}','${new Date().toISOString().slice(0,10)}','${x.ttl}')`);
 
     for(let i=0;i<x.pname.length;i++){
-        let d=await exe(`insert into product(pname,packing,batchid,exp,qty,mrp,rate,amt,adddate,isexpired,party,p_billid) values('${x.pname[i]}','${x.packing[i]}','${x.bid[i]}','${x.exp[i]}','${x.qty[i]}','${x.mrp[i]}','${x.rate[i]}','${x.amt[i]}','${new Date().toISOString().slice(0,10)}','${false}','${req.body.vid}','${pbill.insertId}')`);
+    
+        let d=await exe(`insert into product(pname,packing,batchid,exp,qty,mrp,rate,amt,adddate,isexpired,party,p_billid) values('${x.pname[i]}','${x.packing[i]}','${x.bid[i]}','${x.exp[i]}','${x.qty[i]}','${x.mrp[i]}','${x.rate[i]}','${x.amt[i]}','${new Date(x.date[i]).toISOString().slice(0,10)}','${false}','${req.body.vid}','${pbill.insertId}')`);
         await exe(`insert into stocks(pname,packing,batchid,exp,qty,mrp,rate,amt,adddate,isExpired,party) values('${x.pname[i]}','${x.packing[i]}','${x.bid[i]}','${x.exp[i]}','${x.qty[i]}','${x.mrp[i]}','${x.rate[i]}','${x.amt[i]}','${new Date().toISOString().slice(0,10)}','${false}','${req.body.vid}')`);
    
     }

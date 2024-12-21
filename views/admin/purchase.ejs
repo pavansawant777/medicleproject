@@ -61,6 +61,7 @@
     <th>
         Ex. Date (mm/yy)
     </th>
+    <th>Import Date</th>
     <th>
         Qantity
     </th>
@@ -87,7 +88,7 @@
 
 <tfoot>
     <tr >
-        <td colspan="3">
+        <td colspan="4">
             <select id="vn" onchange="selectVendor()" class="form-control" >
             <option selected value="" disabled>Select the party</option>
 
@@ -111,14 +112,14 @@
    
 </tfoot>
 <tfoot>
-    <td colspan="6"></td>
+    <td colspan="7"></td>
     <td colspan="3">
         Net Total :
 <input class="form-control" id="net_ttl" readonly/>
     </td>
 </tfoot>
 <tfoot>
-    <td colspan="9 text-center">
+    <td colspan="10 text-center">
      <b><i class="fa fa-user"></i>&nbsp; Party Details</b>
 
     </td>
@@ -185,6 +186,9 @@ function selectVendor(){
     </td>    
 <td><input type="text" name="pbatchid" class="form-control shadow-none"  placeholder="Batch Id"></td> 
 <td>   <input type="month" name="pexp" class="form-control shadow-none" ></td> 
+<td>
+    <input type="date" id="date" name="date" class="form-control shadow-none"/>
+    </td>
 <td>   <input type="number" name="pqty" placeholder="Quantity" id="qty-${i}" onkeyup="total(this)" class="form-control shadow-none" ></td> 
 <td>          <input type="number" placeholder="MRP" name="pmrp" id="mrp-${i}"  class="form-control shadow-none" onkeyup="total(this)" ></td> 
 <td>          <input type="number" placeholder="Rate" name="prate" id="rate-${i}" onkeyup="total(this)" class="form-control shadow-none" ></td> 
@@ -220,6 +224,7 @@ else{
         "mrp":[],
         "rate":[],
         "amt":[],
+        "date":[],
         "vid":vid,
         "ttl":document.getElementById("net_ttl").value,
     }
@@ -231,8 +236,10 @@ else{
     let pmrp=document.getElementsByName("pmrp");
     let prate=document.getElementsByName("prate");
     let pamt=document.getElementsByName("pamt");
-    
-
+    let pdate=document.getElementsByName("date");
+for(let n of pdate){
+    obj.date.push(n.value);
+}
     for(let n of pname){
         obj.pname.push(n.value);
     }
@@ -295,5 +302,21 @@ else{
   }
 
     </script>
+        <script>
+            // Get today's date in YYYY-MM-DD format
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            let mm = today.getMonth() + 1; // Months are 0-based
+            let dd = today.getDate();
+    
+            // Format the date as YYYY-MM-DD
+            if (mm < 10) mm = '0' + mm;
+            if (dd < 10) dd = '0' + dd;
+    
+            const formattedDate = `${yyyy}-${mm}-${dd}`;
+    
+            // Set the value of the date input to today's date
+            document.getElementById('date').value = formattedDate;
+        </script>
 
 <%-include('footer.ejs')%>
