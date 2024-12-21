@@ -242,7 +242,7 @@ route.post("/save-purchase",async(req,res)=>{
 
     for(let i=0;i<x.pname.length;i++){
     
-        let d=await exe(`insert into product(pname,packing,batchid,exp,qty,mrp,rate,amt,adddate,isexpired,party,p_billid) values('${x.pname[i]}','${x.packing[i]}','${x.bid[i]}','${x.exp[i]}','${x.qty[i]}','${x.mrp[i]}','${x.rate[i]}','${x.amt[i]}','${new Date(x.date[i]).toISOString().slice(0,10)}','${false}','${req.body.vid}','${pbill.insertId}')`);
+        let d=await exe(`insert into product(pname,packing,batchid,exp,qty,mrp,rate,amt,adddate,isexpired,party,p_billid) values('${x.pname[i]}','${x.packing[i]}','${x.bid[i]}','${x.exp[i]}','${x.qty[i]}','${x.mrp[i]}','${x.rate[i]}','${x.amt[i]}','${new Date(x.date).toISOString().slice(0,10)}','${false}','${req.body.vid}','${pbill.insertId}')`);
         await exe(`insert into stocks(pname,packing,batchid,exp,qty,mrp,rate,amt,adddate,isExpired,party) values('${x.pname[i]}','${x.packing[i]}','${x.bid[i]}','${x.exp[i]}','${x.qty[i]}','${x.mrp[i]}','${x.rate[i]}','${x.amt[i]}','${new Date().toISOString().slice(0,10)}','${false}','${req.body.vid}')`);
    
     }

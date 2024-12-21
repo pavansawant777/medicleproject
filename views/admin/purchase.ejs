@@ -13,7 +13,9 @@
     #e-warn{
         display: none;
     }
- 
+ #show-date-warn{
+    display: none;
+ }
 </style>
 
 <div class="container p-4">
@@ -61,7 +63,7 @@
     <th>
         Ex. Date (mm/yy)
     </th>
-    <th>Import Date</th>
+
     <th>
         Qantity
     </th>
@@ -119,9 +121,14 @@
     </td>
 </tfoot>
 <tfoot>
-    <td colspan="10 text-center">
+    <td colspan="7">
      <b><i class="fa fa-user"></i>&nbsp; Party Details</b>
 
+    </td>
+    <td colspan="3">
+        <label class="mb-2">Select Date :</label>
+        <input type="date" id="date"  class="form-control shadow-none"/>
+        <span style="font-size: 13px;" class="text-danger" id="show-date-warn"><i class="fa fa-warning"></i> Please select date</span>
     </td>
 </tfoot>
 
@@ -186,9 +193,7 @@ function selectVendor(){
     </td>    
 <td><input type="text" name="pbatchid" class="form-control shadow-none"  placeholder="Batch Id"></td> 
 <td>   <input type="month" name="pexp" class="form-control shadow-none" ></td> 
-<td>
-    <input type="date" id="date" name="date" class="form-control shadow-none"/>
-    </td>
+
 <td>   <input type="number" name="pqty" placeholder="Quantity" id="qty-${i}" onkeyup="total(this)" class="form-control shadow-none" ></td> 
 <td>          <input type="number" placeholder="MRP" name="pmrp" id="mrp-${i}"  class="form-control shadow-none" onkeyup="total(this)" ></td> 
 <td>          <input type="number" placeholder="Rate" name="prate" id="rate-${i}" onkeyup="total(this)" class="form-control shadow-none" ></td> 
@@ -224,7 +229,7 @@ else{
         "mrp":[],
         "rate":[],
         "amt":[],
-        "date":[],
+        "date":document.getElementById("date").value,
         "vid":vid,
         "ttl":document.getElementById("net_ttl").value,
     }
@@ -236,10 +241,8 @@ else{
     let pmrp=document.getElementsByName("pmrp");
     let prate=document.getElementsByName("prate");
     let pamt=document.getElementsByName("pamt");
-    let pdate=document.getElementsByName("date");
-for(let n of pdate){
-    obj.date.push(n.value);
-}
+ 
+
     for(let n of pname){
         obj.pname.push(n.value);
     }
@@ -264,11 +267,13 @@ for(let n of pdate){
     for(let n of pamt){
         obj.amt.push(n.value);
     }
-    if(obj.vid==""){
+    if(obj.vid==""||document.getElementById("date").value==""){
         document.getElementById("e-warn").style.display='block';
+    document.getElementById("show-date-warn").style.display='block';
     }
     else{
         document.getElementById("e-warn").style.display='none';
+        document.getElementById("show-date-warn").style.display='none';
   $.ajax({"url":"/save-purchase","method":"post","data":obj}).done((res)=>{
       if(res){
           document.getElementById("alert").click();
@@ -302,21 +307,6 @@ for(let n of pdate){
   }
 
     </script>
-        <script>
-            // Get today's date in YYYY-MM-DD format
-            const today = new Date();
-            const yyyy = today.getFullYear();
-            let mm = today.getMonth() + 1; // Months are 0-based
-            let dd = today.getDate();
     
-            // Format the date as YYYY-MM-DD
-            if (mm < 10) mm = '0' + mm;
-            if (dd < 10) dd = '0' + dd;
-    
-            const formattedDate = `${yyyy}-${mm}-${dd}`;
-    
-            // Set the value of the date input to today's date
-            document.getElementById('date').value = formattedDate;
-        </script>
 
 <%-include('footer.ejs')%>
