@@ -97,7 +97,11 @@ input{
             <label class="mb-2">Dicount (%) :</label>
             <input type="number" onkeyup="setNetTtl()" id="disc" class="form-control" >
         </td>
-        <td colspan="3">
+        <td>
+            <label class="mb-2">GST (%) :</label>
+            <input type="number" onkeyup="setNetTtl()" id="gst" class="form-control" > 
+        </td>
+        <td colspan="2">
             <label class="mb-2">Net Total (&#8377;) :</label>
             <input type="number" readonly id="net_ttl" class="form-control" >
         </td>
@@ -165,6 +169,7 @@ function sendData(){
         "rmny":document.getElementById("r-mny").value,
         "cid":"",
         "isPack":[],
+        "gst":document.getElementById("gst").value
     }
 
     for(let i=0;i<document.getElementsByClassName("medi").length;i++){
@@ -375,7 +380,7 @@ function selectMed(ele){
             document.getElementsByName("up-"+ele.name.split("-")[1])[0].value=0;
             document.getElementsByName("uph-"+ele.name.split("-")[1])[0].value=0;
             document.getElementsByName("mqty-"+ele.name.split("-")[1])[0].value=0;
-            console.log('hello');
+           
             if(i.qty<10){
                 document.getElementById('ots-'+ele.name.split("-")[1]).style.display='block';
             }
@@ -427,10 +432,13 @@ function calTtlAmt(){
     function setNetTtl(){
         if(document.getElementById("disc").value==0){
             document.getElementById("net_ttl").value=document.getElementById("ttl").value;
+            document.getElementById('net_ttl').value=Number(document.getElementById('ttl') .value)+Number(((document.getElementById("ttl").value)/100)*(document.getElementById("gst").value)); 
+
         }
         else{
         document.getElementById("net_ttl").value= document.getElementById("ttl").value-((document.getElementById("ttl").value)/100)*(document.getElementById("disc").value);
-        }
+        document.getElementById('net_ttl').value=document.getElementById('ttl') .value+((document.getElementById("ttl").value)/100)*(document.getElementById("gst").value); 
+    }
     }
     function setPendingStatus(){
         if($("#p-sts").val()=='Pending'){

@@ -299,7 +299,7 @@ route.post("/save-bill",async(req,res)=>{
             let uqty=await exe(`update stocks set qty='${qt[0].qty-d.qty[i]}' where id='${d.product[i]}'`);
         }
     }
-    let bd=await exe(`insert into bill_det(disc,ttl,net_ttl,pmtd,psts,pmny,rmny,bill_id) values('${d.discount}','${d.ttl_amt}','${d.net_ttl}','${d.pmtd}','${d.psts}','${d.pmny}','${d.rmny}','${b.insertId}')`);
+    let bd=await exe(`insert into bill_det(disc,ttl,net_ttl,pmtd,psts,pmny,rmny,bill_id,gst) values('${d.discount}','${d.ttl_amt}','${d.net_ttl}','${d.pmtd}','${d.psts}','${d.pmny}','${d.rmny}','${b.insertId}','${d.gst}')`);
 
     res.send(b.insertId+"");
 
