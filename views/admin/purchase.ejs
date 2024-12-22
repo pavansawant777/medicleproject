@@ -114,22 +114,28 @@
    
 </tfoot>
 <tfoot>
-    <td colspan="7"></td>
     <td colspan="3">
-        Net Total :
-<input class="form-control" id="net_ttl" readonly/>
-    </td>
-</tfoot>
-<tfoot>
-    <td colspan="7">
-     <b><i class="fa fa-user"></i>&nbsp; Party Details</b>
-
-    </td>
-    <td colspan="3">
-        <label class="mb-2">Select Date :</label>
+        <label class="">Select Date :</label>
         <input type="date" id="date"  class="form-control shadow-none"/>
         <span style="font-size: 13px;" class="text-danger" id="show-date-warn"><i class="fa fa-warning"></i> Please select date</span>
     </td>
+    <td colspan="2">
+      Total :
+<input class="form-control" id="net_ttl" readonly/>
+    </td>
+    <td colspan="2">     GST (%):
+        <input type="number" onkeyup="setNetTtl()" class="form-control" id="gst" /></td>
+    <td colspan="3">
+        Net Total :
+<input class="form-control" id="tot" readonly/>
+    </td>
+</tfoot>
+<tfoot>
+    <td colspan="10">
+     <b><i class="fa fa-user"></i>&nbsp; Party Details</b>
+
+    </td>
+    
 </tfoot>
 
 
@@ -157,6 +163,10 @@ function selectVendor(){
 
 <script>
     let i=0;
+    function setNetTtl(){
+       document.getElementById("tot").value=Number(document.getElementById("net_ttl").value)+Number((document.getElementById("net_ttl").value/100)*document.getElementById("gst").value)
+ 
+    }
     function addRow(){
         ++i;
         $("#myform").append(` <tr>
@@ -231,7 +241,9 @@ else{
         "amt":[],
         "date":document.getElementById("date").value,
         "vid":vid,
+        "gst":document.getElementById('gst').value,
         "ttl":document.getElementById("net_ttl").value,
+        "net_ttl":document.getElementById("tot").value
     }
     let pname=document.getElementsByName("pname");
     let ppacking=document.getElementsByName("ppacking");

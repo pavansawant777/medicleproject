@@ -2,7 +2,7 @@ let express=require('express');
 let route=express.Router();
 var exe = require("./connection.js")
 function checkAdmin(req,res,next){
-req.session.uid=1;
+
 if(req.session.uid){
 next();
 }
@@ -26,7 +26,7 @@ let ns=n/1000;
 let nm=ns/60;
 let nh=nm/60;
 let nd=nh/24;
-if(Math.floor(ed-nd)==0){
+if(Math.floor(ed-nd)<=0){
     let update=await exe(`update stocks set isExpired='${1}' where id='${i.id}'`);
     }
 }
@@ -63,7 +63,7 @@ route.get("/",checkAdmin,async(req,res)=>{
     var ttl = await exe(`select count(*) as ttlcount from customer`)
     var ttp = await exe(`select count(*) as ttlparty from vendor`)
     let tsell=await exe(`select *,(select net_ttl from bill_det where bill_det.bill_id=bill.id) as exp from bill`);
-    let texp=await exe(`select*from product`);
+    let texp=await exe(`select* from product_bill`);
     let ttl_sell=0;
    let ttl_exp=0;
    for(let i of tsell){
@@ -72,8 +72,8 @@ route.get("/",checkAdmin,async(req,res)=>{
     }
    }
    for(let i of texp){
-    if(new Date(i.adddate).toISOString().slice(0,10)==new Date().toISOString().slice(0,10)){
-        ttl_exp=Number(ttl_exp)+Number(i.amt);
+    if(new Date(i.idate).toISOString().slice(0,10)==new Date().toISOString().slice(0,10)){
+        ttl_exp=Number(ttl_exp)+Number(i.net_ttl);
    }
    }
     var obj={"img":img[0],"ttl":ttl[0],"ttp":ttp[0],"ttl_sell":ttl_sell,"ttl_exp":ttl_exp};
@@ -238,7 +238,7 @@ route.post("/save-purchase",async(req,res)=>{
     
     let par=await exe(`select*from vendor where id='${x.vid}'`);
     let pcount=await exe(`update vendor set ttl_purchases=${par[0].ttl_purchases+1} where id='${x.vid}'`);
-    let pbill=await exe(`insert into product_bill(vendor,idate,total) values('${x.vid}','${new Date().toISOString().slice(0,10)}','${x.ttl}')`);
+    let pbill=await exe(`insert into product_bill(vendor,idate,total,gst,net_ttl) values('${x.vid}','${new Date().toISOString().slice(0,10)}','${x.ttl}','${x.gst}','${x.net_ttl}')`);
 
     for(let i=0;i<x.pname.length;i++){
     
@@ -488,5 +488,22 @@ res.render("admin/viewvendororder.ejs",obj);
 route.get("/delete-purchase-bill/:bid/:vid",checkAdmin,async(req,res)=>{
     let d=await exe(`delete from product_bill where id='${req.params.bid}' `);
     res.redirect("/view-vendor-order/"+req.params.vid);
+})
+route.get("/medicine",checkAdmin,async(req,res)=>{
+let data="";
+var img = await exe(`select * from userlogin`)
+if(req.query.warn=='oos'){
+data=await exe(`select*from stocks where qty=0`);
+}
+else{
+    data=await exe(`select*from stocks where isExpired=1`);
+}
+let status=(req.query.warn=='oos')?'Out of stock':'Expired';
+let obj={
+    "d":data,
+    "img":img[0],
+    "status":status
+}
+res.render("admin/medicinewarn.ejs",obj);
 })
 module.exports=route;
