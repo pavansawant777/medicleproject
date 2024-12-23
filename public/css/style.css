@@ -6,17 +6,16 @@
  * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
                                         
-                                        <<<<<<< HEAD
+                                     
                                         /* From Uiverse.io by csemszepp */
-                                        
-                                        =======
+                                      
                                         /* From Uiverse.io by csemszepp */
                                         
                                         .sidebar-head img {
                                             filter: invert(100%) brightness(200%);
                                         }
                                         
-                                        >>>>>>>cbc046a899c4e8bfa49a446f8ce8fc6d599cffa9 .custum-file-upload {
+                                         .custum-file-upload {
                                             height: 40px;
                                             width: 350px;
                                             display: flex;

@@ -318,7 +318,7 @@ function addRow(ele){
             </td>
             
             <td>
-                <input type="text" class="form-control  ttl_amt"  readonly name="ttl-${j}"  >
+                <input type="text" class="form-control  ttl_amt"  readonly name="ttl-${j}  >
             </td>
             <td>
                 <button class="btn btn-danger" onclick="delRow()"><i class="fa fa-trash"></i></button>
@@ -367,6 +367,9 @@ else{
 
     document.getElementsByName("ttl-"+ele.name.split("-")[1])[0].value= document.getElementsByName("mrp-"+ele.name.split("-")[1])[0].value*d;
 }
+
+ var ttamt = parseFloat(document.getElementsByClassName('ttl_amt').value);
+document.getElementsByClassName('ttl_amt').value = ttamt.toFixed(2);
     
     calTtlAmt();
 }
@@ -389,6 +392,9 @@ function selectMed(ele){
 
             }
         }
+
+        
+        
     }
 calTtlAmt();
 
