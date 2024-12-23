@@ -183,7 +183,7 @@ route.get("/addcustomer",checkAdmin,async function(req,res){
 
 route.post("/save-customer", async function(req,res){
     var d= req.body
-
+    d.cname = d.cname.replaceAll("'","\\'");
     var sql = `insert into customer(cname,cemail,ccontact,cadd)values('${d.cname}','${d.cemail}','${d.ccontact}','${d.cadd}')`
 
     var data = await exe(sql);

@@ -91,7 +91,7 @@ input{
     <tr>
         <td colspan="2">
             <label class="mb-2">Total Amount (&#8377;) :</label>
-            <input type="number" id="ttl" class="form-control" readonly>
+            <input type="number"  id="ttl" class="form-control" readonly>
         </td>
         <td colspan="2">
             <label class="mb-2">Dicount (%) :</label>
@@ -318,7 +318,7 @@ function addRow(ele){
             </td>
             
             <td>
-                <input type="text" class="form-control  ttl_amt"  readonly name="ttl-${j}" >
+                <input type="text" class="form-control  ttl_amt"  readonly name="ttl-${j}"  >
             </td>
             <td>
                 <button class="btn btn-danger" onclick="delRow()"><i class="fa fa-trash"></i></button>
@@ -428,18 +428,59 @@ function calTtlAmt(){
        }
         }
       }
-    
-    function setNetTtl(){
-        if(document.getElementById("disc").value==0){
-            document.getElementById("net_ttl").value=document.getElementById("ttl").value;
-            document.getElementById('net_ttl').value=Number(document.getElementById('ttl') .value)+Number(((document.getElementById("ttl").value)/100)*(document.getElementById("gst").value)); 
+   
+      
 
-        }
-        else{
-        document.getElementById("net_ttl").value= document.getElementById("ttl").value-((document.getElementById("ttl").value)/100)*(document.getElementById("disc").value);
-        document.getElementById('net_ttl').value=document.getElementById('ttl') .value+((document.getElementById("ttl").value)/100)*(document.getElementById("gst").value); 
+      function setNetTtl() {
+    
+    const ttl = parseFloat(document.getElementById("ttl").value) || 0;
+    const disc = parseFloat(document.getElementById("disc").value) || 0;
+    const gst = parseFloat(document.getElementById("gst").value) || 0;
+
+   
+    if (disc < 0 || disc > 100) {
+        alert("Please enter a valid discount percentage (0-100).");
+        return;
     }
+
+    if (gst < 0) {
+        alert("GST value cannot be negative.");
+        return;
     }
+
+
+    const discountAmount = (ttl * disc) / 100;
+    const gstAmount = (ttl * gst) / 100;
+
+    
+    let netTtl = ttl;
+
+    if (disc > 0) {
+        netTtl -= discountAmount; 
+    }
+
+    netTtl += gstAmount;
+
+    
+    document.getElementById("ttl").value = ttl.toFixed(2); // Round to 2 decimal places
+    document.getElementById("net_ttl").value = netTtl.toFixed(2); // Round to 2 decimal places
+}
+
+
+
+
+
+    // function setNetTtl(){
+    //     if(document.getElementById("disc").value==0){
+    //         document.getElementById("net_ttl").value=document.getElementById("ttl").value;
+    //         document.getElementById('net_ttl').value=Number(document.getElementById('ttl').value)+Number(((document.getElementById("ttl").value)/100)*(document.getElementById("gst").value)); 
+
+    //     }
+    //     else{
+    //     document.getElementById("net_ttl").value= document.getElementById("ttl").value-((document.getElementById("ttl").value)*(document.getElementById("disc").value))/100;
+    //     document.getElementById('net_ttl').value=document.getElementById('ttl').value+((document.getElementById("ttl").value)/100)*(document.getElementById("gst").value); 
+    // }
+    // }
     function setPendingStatus(){
         if($("#p-sts").val()=='Pending'){
             document.getElementById("p-mny").disabled=false;
