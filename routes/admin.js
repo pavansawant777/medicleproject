@@ -244,6 +244,9 @@ route.post("/save-purchase",async(req,res)=>{
 
     console.log(req.body.date)
 
+    let pbill=await exe(`insert into product_bill(vendor,idate,total,gst,net_ttl) values('${x.vid}','${new Date(x.date).toISOString().slice(0,10)}','${x.ttl}','${x.gst}','${x.net_ttl}')`);
+
+
     for(let i=0;i<x.pname.length;i++){
     
         let d=await exe(`insert into product(pname,packing,batchid,exp,qty,mrp,rate,amt,adddate,isexpired,party,p_billid) values('${x.pname[i]}','${x.packing[i]}','${x.bid[i]}','${x.exp[i]}','${x.qty[i]}','${x.mrp[i]}','${x.rate[i]}','${x.amt[i]}','${new Date(x.date).toISOString().slice(0,10)}','${false}','${req.body.vid}','${pbill.insertId}')`);
