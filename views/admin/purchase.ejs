@@ -114,15 +114,25 @@
    
 </tfoot>
 <tfoot>
-    <td colspan="3">
+    <td colspan="1">
         <label class="">Select Date :</label>
-        <input type="date" id="date"  class="form-control shadow-none"/>
+        <input type="date" id="date" name="idate"  class="form-control shadow-none"/>
         <span style="font-size: 13px;" class="text-danger" id="show-date-warn"><i class="fa fa-warning"></i> Please select date</span>
     </td>
     <td colspan="2">
       Total :
-<input class="form-control" id="net_ttl" readonly/>
+<input type="number" class="form-control" id="net_ttl" readonly />
     </td>
+
+    <td colspan="2">
+
+        Discount (%) :
+        <input type="number" class="form-control shadow-none" onkeyup="setNetTtl()" id="purdis" />
+
+    </td>
+
+
+
     <td colspan="2">     GST (%):
         <input type="number" onkeyup="setNetTtl()" class="form-control" id="gst" /></td>
     <td colspan="3">
@@ -164,8 +174,34 @@ function selectVendor(){
 <script>
     let i=0;
     function setNetTtl(){
-       document.getElementById("tot").value=Number(document.getElementById("net_ttl").value)+Number((document.getElementById("net_ttl").value/100)*document.getElementById("gst").value)
- 
+
+        var total = Number(document.getElementById('net_ttl').value);
+        var disamount = Number(document.getElementById('purdis').value);
+        var totdis = (total * disamount) / 100;
+        var gstamount = Number(document.getElementById('gst').value)
+        // var gst = totdis * (gstamount/100)
+
+        var ttl = total - totdis ;
+
+        
+        var gst = (ttl * gstamount) / 100 ;
+        
+        document.getElementById('tot').value = (ttl + gst).toFixed(2) ;
+
+
+        //const priceAfterDiscount = originalPrice - discountAmount;
+
+// Calculate GST Amount and Final Price
+// const gstAmount = (priceAfterDiscount * gstPercentage) / 100;
+// const finalPrice = priceAfterDiscount + gstAmount;
+
+
+
+
+
+    //    document.getEllement =Number(document.getElementById("net_ttl").value)+Number((document.getElementById("net_ttl").value/100)*document.getElementById("gst").value)
+    //  
+      
     }
     function addRow(){
         ++i;
@@ -194,7 +230,7 @@ function selectVendor(){
     <option>16 Tab</option>
     <option>17 Tab</option>
     <option>18 Tab</option>
-    <option>19 Tab</option>
+    <option>19 Tab</option> 
     <option>20 Tab</option>
     <option>250 ml</option>
     <option>500 ml</option>
@@ -302,6 +338,13 @@ else{
   }
 
   function total(ele){
+
+
+
+
+    
+
+
  
     var q=document.getElementById('qty-'+ele.id.split("-")[1]).value;
   var r=document.getElementById('rate-'+ele.id.split("-")[1]).value;

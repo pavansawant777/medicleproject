@@ -67,15 +67,17 @@ route.get("/",checkAdmin,async(req,res)=>{
     let ttl_sell=0;
    let ttl_exp=0;
    for(let i of tsell){
-    if(new Date(i.pdate).toISOString().slice(0,10)==new Date().toISOString().slice(0,10)){
+    if(i.pdate ==new Date().toISOString().slice(0,10)){
         ttl_sell=Number(ttl_sell)+Number(i.exp);
     }
    }
    for(let i of texp){
-    if(new Date(i.idate).toISOString().slice(0,10)==new Date().toISOString().slice(0,10)){
+    if(i.idate ==new Date().toISOString().slice(0,10)){
         ttl_exp=Number(ttl_exp)+Number(i.net_ttl);
    }
    }
+
+
     var obj={"img":img[0],"ttl":ttl[0],"ttp":ttp[0],"ttl_sell":ttl_sell,"ttl_exp":ttl_exp};
 
   
@@ -238,7 +240,9 @@ route.post("/save-purchase",async(req,res)=>{
     
     let par=await exe(`select*from vendor where id='${x.vid}'`);
     let pcount=await exe(`update vendor set ttl_purchases=${par[0].ttl_purchases+1} where id='${x.vid}'`);
-    let pbill=await exe(`insert into product_bill(vendor,idate,total,gst,net_ttl) values('${x.vid}','${new Date().toISOString().slice(0,10)}','${x.ttl}','${x.gst}','${x.net_ttl}')`);
+    let pbill=await exe(`insert into product_bill(vendor,idate,total,gst,net_ttl) values('${x.vid}','${x.date}','${x.ttl}','${x.gst}','${x.net_ttl}')`);
+
+    console.log(req.body.date)
 
     for(let i=0;i<x.pname.length;i++){
     
@@ -268,8 +272,9 @@ route.get("/stocks",checkAdmin,async(req,res)=>{
 route.get("/all-purchases",checkAdmin,async(req,res)=>{
     var img = await exe(`select * from userlogin`)
     let p=await exe(`select*,(select name from vendor where vendor.id=product.party) as party_name from product `);
+    var ttl = await exe(`select * from product_bill`)
 
-    var obj = {"img":img[0],"p":p};
+    var obj = {"img":img[0],"p":p,"ttl":ttl};
     res.render("admin/purchaselist.ejs",obj);
 })
 route.get("/delete-product/:id",checkAdmin,async(req,res)=>{
