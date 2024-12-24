@@ -238,7 +238,7 @@ route.post("/save-purchase",async(req,res)=>{
     
     let par=await exe(`select*from vendor where id='${x.vid}'`);
     let pcount=await exe(`update vendor set ttl_purchases=${par[0].ttl_purchases+1} where id='${x.vid}'`);
-    let pbill=await exe(`insert into product_bill(vendor,idate,total,gst,net_ttl) values('${x.vid}','${new Date().toISOString().slice(0,10)}','${x.ttl}','${x.gst}','${x.net_ttl}')`);
+    let pbill=await exe(`insert into product_bill(vendor,idate,total,gst,net_ttl) values('${x.vid}','${new Date(x.date).toISOString().slice(0,10)}','${x.ttl}','${x.gst}','${x.net_ttl}')`);
 
     for(let i=0;i<x.pname.length;i++){
     

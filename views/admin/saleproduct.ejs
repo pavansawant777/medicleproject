@@ -89,7 +89,7 @@ input{
         <td colspan="7"><h5>Payment Details</h5></td>
     </tr>
     <tr>
-        <td colspan="2">
+        <td colspan="3">
             <label class="mb-2">Total Amount (&#8377;) :</label>
             <input type="number"  id="ttl" class="form-control" readonly>
         </td>
@@ -97,11 +97,8 @@ input{
             <label class="mb-2">Dicount (%) :</label>
             <input type="number" onkeyup="setNetTtl()" id="disc" class="form-control" >
         </td>
-        <td>
-            <label class="mb-2">GST (%) :</label>
-            <input type="number" onkeyup="setNetTtl()" id="gst" class="form-control" > 
-        </td>
-        <td colspan="2">
+    
+        <td colspan="3">
             <label class="mb-2">Net Total (&#8377;) :</label>
             <input type="number" readonly id="net_ttl" class="form-control" >
         </td>
@@ -169,7 +166,7 @@ function sendData(){
         "rmny":document.getElementById("r-mny").value,
         "cid":"",
         "isPack":[],
-        "gst":document.getElementById("gst").value
+        "gst":0
     }
 
     for(let i=0;i<document.getElementsByClassName("medi").length;i++){
@@ -293,6 +290,8 @@ function addRow(ele){
                 <option value="<%-i.id%>"><%-i.pname%></option>
                 
                 <%}%>
+
+
             </select>
             <span style="font-size:13px" class="text-danger warn" id="emw-${j}"><i class="fa fa-warning"></i>&nbsp;This field is empty !</span>
                <span style="font-size:13px" class="text-warning warn" id="ots-${j}"><i class="fa fa-warning"></i>&nbsp; This item is out of stock!!</span>
@@ -318,12 +317,17 @@ function addRow(ele){
             </td>
             
             <td>
-                <input type="text" class="form-control  ttl_amt"  readonly name="ttl-${j}  >
+              <input type="text" class="form-control  ttl_amt"  readonly name="ttl-${j}" >
             </td>
-            <td>
+        
+       
+    
+    
+              <td>
                 <button class="btn btn-danger" onclick="delRow()"><i class="fa fa-trash"></i></button>
-            </td>
-
+                
+                </td>
+            
         </tr>`);
     }
 
@@ -375,13 +379,18 @@ document.getElementsByClassName('ttl_amt').value = ttamt.toFixed(2);
 }
 function selectMed(ele){
     let ar=<%- JSON.stringify(med) %>;
+
     for(let i of ar){
         if(i.id==ele.value){
+            console.log((ele.name.split("-")[1])[0].value)
             document.getElementsByName("bid-"+ele.name.split("-")[1])[0].value=i.batchid;
             document.getElementsByName("mrp-"+ele.name.split("-")[1])[0].value=i.mrp;
             document.getElementsByName("ttl-"+ele.name.split("-")[1])[0].value=i.mrp;
+            if(document.getElementsByClassName("up-"+ele.name.split("-")[1])[0]){
             document.getElementsByName("up-"+ele.name.split("-")[1])[0].value=0;
-            document.getElementsByName("uph-"+ele.name.split("-")[1])[0].value=0;
+            document.getElementsByName("uph-"+ele.name.split("-")[1])[0].value=0;x    
+        }
+          
             document.getElementsByName("mqty-"+ele.name.split("-")[1])[0].value=0;
            
             if(i.qty<10){
@@ -401,6 +410,7 @@ calTtlAmt();
 
 }
 function calTtlAmt(){
+    console.log('helo');
     let amt=0;
     for(let i of document.getElementsByClassName("ttl_amt")){
       amt=Number(amt)+Number(i.value);
@@ -437,56 +447,20 @@ function calTtlAmt(){
    
       
 
-      function setNetTtl() {
-    
-    const ttl = parseFloat(document.getElementById("ttl").value) || 0;
-    const disc = parseFloat(document.getElementById("disc").value) || 0;
-    const gst = parseFloat(document.getElementById("gst").value) || 0;
-
-   
-    if (disc < 0 || disc > 100) {
-        alert("Please enter a valid discount percentage (0-100).");
-        return;
-    }
-
-    if (gst < 0) {
-        alert("GST value cannot be negative.");
-        return;
-    }
-
-
-    const discountAmount = (ttl * disc) / 100;
-    const gstAmount = (ttl * gst) / 100;
-
-    
-    let netTtl = ttl;
-
-    if (disc > 0) {
-        netTtl -= discountAmount; 
-    }
-
-    netTtl += gstAmount;
-
-    
-    document.getElementById("ttl").value = ttl.toFixed(2); // Round to 2 decimal places
-    document.getElementById("net_ttl").value = netTtl.toFixed(2); // Round to 2 decimal places
-}
 
 
 
+     function setNetTtl(){
+         if(document.getElementById("disc").value==0){
+             document.getElementById("net_ttl").value=document.getElementById("ttl").value;
+             document.getElementById('net_ttl').value=Number(document.getElementById('ttl').value)+Number(((document.getElementById("ttl").value)/100)*(document.getElementById("gst").value)); 
 
-
-    // function setNetTtl(){
-    //     if(document.getElementById("disc").value==0){
-    //         document.getElementById("net_ttl").value=document.getElementById("ttl").value;
-    //         document.getElementById('net_ttl').value=Number(document.getElementById('ttl').value)+Number(((document.getElementById("ttl").value)/100)*(document.getElementById("gst").value)); 
-
-    //     }
-    //     else{
-    //     document.getElementById("net_ttl").value= document.getElementById("ttl").value-((document.getElementById("ttl").value)*(document.getElementById("disc").value))/100;
-    //     document.getElementById('net_ttl').value=document.getElementById('ttl').value+((document.getElementById("ttl").value)/100)*(document.getElementById("gst").value); 
-    // }
-    // }
+         }
+         else{
+         document.getElementById("net_ttl").value= document.getElementById("ttl").value-((document.getElementById("ttl").value)*(document.getElementById("disc").value))/100;
+         document.getElementById('net_ttl').value=document.getElementById('ttl').value+((document.getElementById("ttl").value)/100)*(document.getElementById("gst").value); 
+     }
+     }
     function setPendingStatus(){
         if($("#p-sts").val()=='Pending'){
             document.getElementById("p-mny").disabled=false;
