@@ -270,11 +270,12 @@ route.post("/save-purchase",async(req,res)=>{
 
 })
 route.get("/purchase-inv/:id",checkAdmin,async(req,res)=>{
+    var data = await exe(`select * from mdetails where m_id = '1' `)
 let bill_d=await exe(`select*,(select name from vendor where vendor.id=product_bill.vendor) as vname from product_bill where id='${req.params.id}'`)
 let prod=await exe(`select*from product where p_billid='${req.params.id}'`);
 let obj={
     "b_data":bill_d[0],
-    "prod":prod
+    "prod":prod,"data":data[0]
 }
 res.render("admin/productbillinv.ejs",obj);
 })
@@ -325,13 +326,13 @@ route.post("/save-bill",async(req,res)=>{
 
 })
 route.get("/invoice/:id",checkAdmin,async(req,res)=>{
-
+    var details = await exe(`select * from mdetails where m_id = '1'`)
     let bill= await exe(`select* from bill where id='${req.params.id}'`);
     let cus=await exe(`select*from customer where cid='${bill[0].cid}'`)
     let med=await exe(`select*,(select pname from stocks where order_list.product=stocks.id)as pname,(select packing from stocks where order_list.product=stocks.id)as pack from order_list where bill_id='${req.params.id}'`);
     let det=await exe(`select*from bill_det where bill_id='${req.params.id}'`);
     var img = await exe(`select * from userlogin`)
-    var obj = {"img":img[0],"cus":cus[0],'bill':bill[0],"med":med,'det':det[0]};
+    var obj = {"img":img[0],"cus":cus[0],'bill':bill[0],"med":med,'det':det[0],"details":details[0]};
     res.render("admin/invoice.ejs",obj);
 
 })
@@ -526,4 +527,29 @@ let obj={
 }
 res.render("admin/medicinewarn.ejs",obj);
 })
+
+
+
+route.get('/mdetails',checkAdmin,async function(req,res){
+    var img = await exe(`select * from userlogin`)
+    var data = await exe(`select * from mdetails`)
+
+    var obj = {"data":data[0],"img":img[0]}
+    res.render("admin/medical_details.ejs",obj)
+})
+
+route.post("/save_details",async function(req,res) {
+    
+
+    var d = req.body;
+
+    var sql = `update mdetails set m_email = '${d.m_email}', m_mobile = '${d.m_mobile}', m_address = '${d.m_address}' where m_id = '1' `
+
+    var data = await exe(sql)
+
+    res.redirect("/mdetails")
+    
+})
+
+
 module.exports=route;
