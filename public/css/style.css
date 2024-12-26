@@ -11,9 +11,9 @@
                                       
                                         /* From Uiverse.io by csemszepp */
                                         
-                                        .sidebar-head img {
+                                        /* .sidebar-head img {
                                             filter: invert(100%) brightness(200%);
-                                        }
+                                        } */
                                         
                                          .custum-file-upload {
                                             height: 40px;
@@ -1247,7 +1247,7 @@
                                         }
                                         
                                         .library-table-name span.purple {
-                                            background-color: #5f2eea;
+                                            background-color: #549341;
                                         }
                                         
                                         .dropzone-start svg {
@@ -1345,7 +1345,7 @@
                                             flex-wrap: wrap;
                                             border-radius: 4px;
                                             padding: 10px 20px;
-                                            background-color: #2f49d1;
+                                            background-color: #549341;
                                             color: #fff;
                                         }
                                         
@@ -1369,7 +1369,7 @@
                                             border-radius: 4px;
                                             padding: 10px 20px;
                                             background-color: #fff;
-                                            color: #2f49d1;
+                                            color: #549341;
                                             font-weight: 500;
                                             font-size: 14px;
                                             line-height: 2.43;
@@ -1393,8 +1393,8 @@
                                             flex-wrap: wrap;
                                             border-radius: 4px;
                                             padding: 10px 20px;
-                                            border: 2px solid #2f49d1;
-                                            color: #2f49d1;
+                                            border: 2px solid #549341;
+                                            color: #549341;
                                             background-color: transparent;
                                         }
                                         
@@ -1417,7 +1417,7 @@
                                             border-radius: 4px;
                                             font-size: 16px;
                                             line-height: 1.5;
-                                            color: #2f49d1;
+                                            color: #549341;
                                         }
                                         
                                         .sidebar-toggle {
@@ -1599,11 +1599,11 @@
                                             -ms-flex-pack: center;
                                             justify-content: center;
                                             text-align: center;
-                                            color: #5f2eea;
+                                            color: #549341;
                                         }
                                         
                                         .upgrade-btn:hover {
-                                            color: #5f2eea;
+                                            color: #549341;
                                             background: rgba(0, 97, 247, 0.15);
                                         }
                                         
@@ -1690,7 +1690,7 @@
                                         }
                                         
                                         .dropdown a:hover {
-                                            color: #2f49d1;
+                                            color: #549341;
                                         }
                                         
                                         .badge-pending,
@@ -1974,7 +1974,7 @@
                                             -webkit-box-pack: justify;
                                             -ms-flex-pack: justify;
                                             justify-content: space-between;
-                                            background-color: rgb(28, 10, 227);
+                                            background-color: #549341;
                                             width: 253px;
                                             /* padding: 20px 15px 37px 20px; */
                                             -webkit-transition: 0.5s all;
@@ -2004,6 +2004,11 @@
                                             flex-wrap: wrap;
                                             padding-bottom: 20px;
                                             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                                            background-color: white;
+                                            border: 3px solid #549341;
+                                            box-sizing: border-box;
+                                            
+
                                         }
                                         
                                         .sidebar-body {
@@ -2662,7 +2667,7 @@
                                         
                                         .stat-cards-icon.primary {
                                             background-color: rgba(47, 73, 209, 0.1);
-                                            color: #2f49d1;
+                                            color: #549341;
                                         }
                                         
                                         .stat-cards-icon.blk {
@@ -2677,7 +2682,7 @@
                                         
                                         .stat-cards-icon.purple {
                                             background-color: rgba(95, 46, 234, 0.1);
-                                            color: #5f2eea;
+                                            color: #549341;
                                         }
                                         
                                         .stat-cards-icon.success {
@@ -2753,7 +2758,7 @@
                                         
                                         .customers-wrapper {
                                             height: 256px;
-                                            background-color: #5f2eea;
+                                            background-color: #549341;
                                             -webkit-box-shadow: 0px 15px 50px rgba(160, 163, 189, 0.1);
                                             box-shadow: 0px 15px 50px rgba(160, 163, 189, 0.1);
                                             border-radius: 10px;
@@ -2869,12 +2874,12 @@
                                         }
                                         
                                         .top-cat-list__subtitle .purple {
-                                            color: #5f2eea;
+                                            color: #549341;
                                             background-color: rgba(116, 51, 255, 0.1);
                                         }
                                         
                                         .top-cat-list__subtitle .blue {
-                                            color: #0061f7;
+                                            color: #549341;
                                             background-color: rgba(116, 51, 255, 0.1);
                                         }
                                         
@@ -2894,7 +2899,7 @@
                                         }
                                         
                                         .top-cat-list__subtitle .primary {
-                                            color: #2f49d1;
+                                            color: #549341;
                                             background-color: rgba(47, 73, 209, 0.1);
                                         }
                                         
@@ -3117,8 +3122,8 @@
                                         }
                                         
                                         .footer a:hover {
-                                            color: #2f49d1;
-                                            border-color: #2f49d1;
+                                            color: #549341;
+                                            border-color: #549341;
                                         }
                                         
                                         .form {
@@ -3236,8 +3241,8 @@
                                         }
                                         
                                         .forget-link:hover {
-                                            color: #2f49d1;
-                                            border-color: #2f49d1;
+                                            color: #549341;
+                                            border-color: #549341;
                                         }
                                         
                                         .sign-up__title {
@@ -3968,6 +3973,9 @@
                                             .mobile3 {
                                                 display: block !important;
                                             }
+                                            aside{
+                                                background-color:#549341 !important;
+                                            }
                                         }
                                         
                                         @media (min-width: 1520px) {
@@ -4416,7 +4424,7 @@
                                                 -webkit-box-pack: justify;
                                                 -ms-flex-pack: justify;
                                                 justify-content: space-between;
-                                                background-color: #0061f7 !important;
+                                                background-color: #549341 !important;
                                                 width: 253px;
                                                 padding: 20px 15px 37px 20px;
                                                 -webkit-transition: 0.5s all;
@@ -5004,7 +5012,7 @@
                                             }
                                             .stat-cards-icon.primary {
                                                 background-color: rgba(47, 73, 209, 0.1);
-                                                color: #2f49d1;
+                                                color: #549341;
                                             }
                                             .stat-cards-icon.warning {
                                                 background-color: rgba(255, 182, 72, 0.1);
@@ -5012,7 +5020,7 @@
                                             }
                                             .stat-cards-icon.purple {
                                                 background-color: rgba(95, 46, 234, 0.1);
-                                                color: #5f2eea;
+                                                color: #549341;
                                             }
                                             .stat-cards-icon.success {
                                                 background-color: rgba(75, 222, 151, 0.1);
@@ -5070,7 +5078,7 @@
                                             }
                                             .customers-wrapper {
                                                 height: 256px;
-                                                background-color: #5f2eea;
+                                                background-color: #549341;
                                                 -webkit-box-shadow: 0px 15px 50px rgba(160, 163, 189, 0.1);
                                                 box-shadow: 0px 15px 50px rgba(160, 163, 189, 0.1);
                                                 border-radius: 10px;
@@ -5175,11 +5183,11 @@
                                                 border-radius: 3px;
                                             }
                                             .top-cat-list__subtitle .purple {
-                                                color: #5f2eea;
+                                                color: #549341;
                                                 background-color: rgba(116, 51, 255, 0.1);
                                             }
                                             .top-cat-list__subtitle .blue {
-                                                color: #0061f7;
+                                                color: #549341;
                                                 background-color: rgba(116, 51, 255, 0.1);
                                             }
                                             .top-cat-list__subtitle .danger {
@@ -5195,7 +5203,7 @@
                                                 background-color: rgba(255, 172, 50, 0.1);
                                             }
                                             .top-cat-list__subtitle .primary {
-                                                color: #2f49d1;
+                                                color: #549341;
                                                 background-color: rgba(47, 73, 209, 0.1);
                                             }
                                             .chart {
@@ -5388,8 +5396,8 @@
                                                 border-bottom: 1px transparent dashed;
                                             }
                                             .footer a:hover {
-                                                color: #2f49d1;
-                                                border-color: #2f49d1;
+                                                color: #549341;
+                                                border-color: #549341;
                                             }
                                             .form {
                                                 -webkit-box-shadow: 0px 5px 10px rgba(160, 163, 189, 0.1);
@@ -5492,8 +5500,8 @@
                                                 border-bottom: dashed 1px transparent;
                                             }
                                             .forget-link:hover {
-                                                color: #2f49d1;
-                                                border-color: #2f49d1;
+                                                color: #549341;
+                                                border-color: #549341;
                                             }
                                             .sign-up__title {
                                                 font-size: 32px;
@@ -6391,3 +6399,12 @@
                                                 }
                                             }
                                         }
+
+                                        .backgrn{
+                                            background-color: #549341;
+                                        }
+                                        /* button{
+                                            background-color: #549341 !important;
+                                            color: white !important;
+                                        } */
+                                        
