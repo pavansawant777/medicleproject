@@ -528,8 +528,7 @@ let obj={
 res.render("admin/medicinewarn.ejs",obj);
 })
 
-<<<<<<< HEAD
-=======
+
 
 
 route.get('/mdetails',checkAdmin,async function(req,res){
@@ -554,5 +553,5 @@ route.post("/save_details",async function(req,res) {
 })
 
 
->>>>>>> 16ca6d04185c32aac51ecc4d3ad1906f00c3d0da
+
 module.exports=route;
