@@ -43,7 +43,7 @@ route.get("/login",(req,res)=>{
 route.post("/user-login",async(req,res)=>{
     let d=await exe(`select*from userlogin where username='${req.body.username}' and password='${req.body.password}' `);
 
-
+req.session.uid=1;
     if(d.length==0){
         let obj={
 "warn":'Wrong username or password'
@@ -64,8 +64,21 @@ route.get("/",checkAdmin,async(req,res)=>{
     var ttp = await exe(`select count(*) as ttlparty from vendor`)
     let tsell=await exe(`select *,(select net_ttl from bill_det where bill_det.bill_id=bill.id) as exp from bill`);
     let texp=await exe(`select* from product_bill`);
+    let tprof=await exe(`select*from bill where pdate='${new Date().toISOString().slice(0,10)}'`);
     let ttl_sell=0;
    let ttl_exp=0;
+   let ttl_pr=0;
+  for(let i of tprof){
+    let orders=await exe(`select*,(select rate from stocks where stocks.id=order_list.product) as rate from order_list where bill_id='${i.id}'`)
+    console.log(orders);
+for(let j of orders){
+let pr=j.mrp-j.rate;
+
+ttl_pr=Number(ttl_pr)+Number(pr);
+}  
+
+}
+
    for(let i of tsell){
     if(i.pdate ==new Date().toISOString().slice(0,10)){
         ttl_sell=Number(ttl_sell)+Number(i.exp);
@@ -78,7 +91,7 @@ route.get("/",checkAdmin,async(req,res)=>{
    }
 
 
-    var obj={"img":img[0],"ttl":ttl[0],"ttp":ttp[0],"ttl_sell":ttl_sell,"ttl_exp":ttl_exp};
+    var obj={"img":img[0],"ttl":ttl[0],"ttp":ttp[0],"ttl_sell":ttl_sell,"ttl_exp":ttl_exp,"ttl_pr":ttl_pr};
 
   
 
@@ -240,10 +253,9 @@ route.post("/save-purchase",async(req,res)=>{
     
     let par=await exe(`select*from vendor where id='${x.vid}'`);
     let pcount=await exe(`update vendor set ttl_purchases=${par[0].ttl_purchases+1} where id='${x.vid}'`);
-    let pbill=await exe(`insert into product_bill(vendor,idate,total,gst,net_ttl) values('${x.vid}','${x.date}','${x.ttl}','${x.gst}','${x.net_ttl}')`);
+    let pbill=await exe(`insert into product_bill(vendor,idate,total,gst,discount,net_ttl) values('${x.vid}','${x.date}','${x.ttl}','${x.gst}','${x.disc}','${x.net_ttl}')`);
 
-    console.log(req.body.date)
-
+ 
     //let pbill=await exe(`insert into product_bill(vendor,idate,total,gst,net_ttl) values('${x.vid}','${new Date(x.date).toISOString().slice(0,10)}','${x.ttl}','${x.gst}','${x.net_ttl}')`);
 
 
