@@ -526,4 +526,5 @@ let obj={
 }
 res.render("admin/medicinewarn.ejs",obj);
 })
+
 module.exports=route;
