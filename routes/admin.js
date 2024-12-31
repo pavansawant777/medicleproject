@@ -552,6 +552,80 @@ route.post("/save_details",async function(req,res) {
     
 })
 
+route.get("/credits",async function(req,res){
+
+    
+    var img = await exe(`select * from userlogin`)
+    var customer = await exe(`select * from credit `)
+    
+
+    var obj = {"img":img[0],"customer":customer}
+
+    
+
+    
+
+    res.render("admin/credit.ejs",obj)
+})
+
+route.post("/save_credit",async function(req,res){
+    var d = req.body
+    
+    var sql = `insert into credit (c_name, c_mobile, c_add) values (?,?,?) `
+    var data = await exe(sql,[d.c_name,d.c_mobile,d.c_name])
+
+    // res.send("<script>location : document.referrer</script>")
+    res.redirect("/credits")
+
+})
+
+route.get("/edit_credit/:credit_id",async function(req,res){
+    var img = await exe(`select * from userlogin`)
+    var data = await exe(`select * from credit where credit_id = '${req.params.credit_id}'`)
+
+    var obj = {"img":img[0],"data":data[0]}
+
+    res.render("admin/credit_edit.ejs",obj)
+    // res.send(data)  
+})
+
+route.post("/credit_edit",async function (req,res) {
+
+    var d = req.body
+    var sql = ` update credit set c_name = '${d.c_name}' , c_mobile = '${d.c_mobile}' , c_add = '${d.c_add}' where credit_id = '${d.credit_id}' `
+
+    var data = await exe(sql)
+
+    res.redirect("/credits")
+    
+})
+
+route.get("/credit_history/:credit_id", async function(req,res){
+    var img = await exe(`select * from userlogin`)
+    var customer = await exe( `SELECT * FROM credit where credit_id = '${req.params.credit_id}'`)
+
+    var obj = {"img":img[0],"data":customer[0]}
+
+    res.render("admin/credit_history.ejs",obj)
+})
+
+route.post("/add_credit",async function(req,res) {
+    var d =  req.body
+
+    // var sql = `update credit set amount = '${d.amount}' , note = '${d.note}' where credit_id = '${d.credit_id}' `
+
+    // var sql = `insert into credit (amount,note) values('${d.amount}','${d.note}' where credit_id = '${d.credit_id}' )`
+
+    var sql = `insert into cd_transaction (credit_id , note, credit_amount,date) values ('${d.credit_id}','${d.note}','${d.credit_amount}','${d.current_date}' )
+     `
+
+    var data = await exe(sql)
+
+    // res.send("<script>location.href = document.referrer</script>")
+    
+    res.send("<script>location.href = document.referrer;</script>")
+})
+
 
 
 module.exports=route;
