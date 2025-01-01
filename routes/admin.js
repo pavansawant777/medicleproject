@@ -575,7 +575,7 @@ route.post("/save_credit",async function(req,res){
     var d = req.body
     
     var sql = `insert into credit (c_name, c_mobile, c_add) values (?,?,?) `
-    var data = await exe(sql,[d.c_name,d.c_mobile,d.c_name])
+    var data = await exe(sql,[d.c_name,d.c_mobile,d.c_add])
 
     // res.send("<script>location : document.referrer</script>")
     res.redirect("/credits")
