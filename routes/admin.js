@@ -557,9 +557,12 @@ route.get("/credits",async function(req,res){
     
     var img = await exe(`select * from userlogin`)
     var customer = await exe(`select * from credit `)
+
+    var c_ttl = await exe(`select sum(credit_amount) as c_ttl from cd_transaction `)
+    var d_ttl = await exe(`select sum(debit_amount) as d_ttl from cd_transaction`)
     
 
-    var obj = {"img":img[0],"customer":customer}
+    var obj = {"img":img[0],"customer":customer,"c_ttl":c_ttl[0],"d_ttl":d_ttl[0]}
 
     
 
@@ -604,9 +607,26 @@ route.get("/credit_history/:credit_id", async function(req,res){
     var img = await exe(`select * from userlogin`)
     var customer = await exe( `SELECT * FROM credit where credit_id = '${req.params.credit_id}'`)
 
-    var obj = {"img":img[0],"data":customer[0]}
+    // var allcust = await exe(`select * from cd_transaction,credit where
+    //                             cd_transaction.credit_id = credit.credit_id
+    //                             and cd_transaction.credit_id  = '${req.params.credit_id}'
+    //                                 `)
+
+    // let allcust=await exe(`select*,(select note from cd_transaction where cd_transaction.credit_id=credit.credit_id) as notes from credit where credit_id='${req.params.credit_id}'`);
+
+
+    var allcust = await exe(`select * from cd_transaction where credit_id = '${req.params.credit_id}'`)
+
+    var sum = await exe(`select sum(credit_amount) as c_amount from cd_transaction where credit_id = '${req.params.credit_id}'`)
+
+    var sum1 = await exe(`select sum(debit_amount) as d_amount from cd_transaction where credit_id = '${req.params.credit_id}' `)
+
+    
+
+    var obj = {"img":img[0],"data":customer[0],"allcust":allcust,"c_amount":sum[0],"d_amount":sum1[0]}
 
     res.render("admin/credit_history.ejs",obj)
+    // res.send(allcust)
 })
 
 route.post("/add_credit",async function(req,res) {
@@ -616,7 +636,7 @@ route.post("/add_credit",async function(req,res) {
 
     // var sql = `insert into credit (amount,note) values('${d.amount}','${d.note}' where credit_id = '${d.credit_id}' )`
 
-    var sql = `insert into cd_transaction (credit_id , note, credit_amount,date) values ('${d.credit_id}','${d.note}','${d.credit_amount}','${d.current_date}' )
+    var sql = `insert into cd_transaction (credit_id , note, credit_amount,date,debit_amount) values ('${d.credit_id}','${d.note}','${d.credit_amount}','${new Date().toISOString().slice(0,10)}','${d.debit_amount}' )
      `
 
     var data = await exe(sql)
@@ -625,6 +645,25 @@ route.post("/add_credit",async function(req,res) {
     
     res.send("<script>location.href = document.referrer;</script>")
 })
+
+
+route.post("/add_debit",async function(req,res){
+
+    var d= req.body;
+
+    var sql = `insert into cd_transaction (credit_id , note, credit_amount,date,debit_amount) values ('${d.credit_id}','${d.note}','${d.credit_amount}','${new Date().toISOString().slice(0,10)}','${d.debit_amount}')`
+
+    var data = await exe(sql)
+
+    res.send("<script>location.href = document.referrer;</script>")
+})
+
+route.get("/back",function(req,res){
+
+    res.redirect("/credits")
+})
+
+
 
 
 

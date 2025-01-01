@@ -6,9 +6,9 @@
     <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#add_customer">Add new Customer +</button>
     
 
-    <h3 class="my-3">Total Credits :</h3>
-    <h3 class="my-3">Total Debits :</h3>
-    <h3 class="my-3">Net Total :</h3>
+    <h3 class="my-3">Total Credits : <span class="text-primary"><%-c_ttl.c_ttl%></span></h3>
+    <h3 class="my-3">Total Debits : <span class="text-danger"><%-d_ttl.d_ttl%></span> </h3>
+    <h3 class="my-3">Net Total : <span class="text-success"><%-c_ttl.c_ttl-d_ttl.d_ttl%></span> </h3>
 
     <h1 class="text-center my-3">Customer Details</h1>
     <table class="table table-bordered table-hover my-5">
