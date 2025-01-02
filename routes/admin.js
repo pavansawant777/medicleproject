@@ -102,8 +102,6 @@ ttl_pr=Number(ttl_pr)+Number(pr);
 
     var obj={"img":img[0],"ttl":ttl[0],"ttp":ttp[0],"ttl_sell":ttl_sell,"ttl_exp":ttl_exp,"ttl_pr":ttl_pr,"ttl_med":data3[0],"ttl_bill":data4[0],"ttl_out":data5[0],"ttlexp":data6[0]};
 
-  
-
     res.render('admin/index.ejs',obj);
     // res.send(data3)
 })
