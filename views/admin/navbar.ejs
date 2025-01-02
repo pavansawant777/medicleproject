@@ -48,27 +48,27 @@
         <div class="sidebar-body p-2 backgrn">
             <ul class="sidebar-body-menu " >
                 <li>
-                    <a class="active" href="/"><span class="icon home" aria-hidden="true"></span>Dashboard</a>
+                    <a class="" href="/" id="home" class="active"><span class="icon home" aria-hidden="true"></span>Dashboard</a>
                 </li>
 
                 <li>
-                    <a  href="/mdetails"><span class="icon home" aria-hidden="true"></span>Medical Details</a>
+                    <a  href="/mdetails" class="" id="medi-det"><span class="icon home" aria-hidden="true"></span>Medical Details</a>
                 </li>
                
 
 
 
                 <li>
-                  <a class="show-cat-btn collapsed " href="##" data-bs-target="#icons-nav" data-bs-toggle="collapse">
+                  <a class="show-cat-btn collapsed  " id="cust-col" href="##" data-bs-target="#icons-nav" data-bs-toggle="collapse">
                       <span class="icon fa fa-users" aria-hidden="true"></span>Customer
                       <span class="category__btn transparent-btn" title="Open list">
                           <span class="sr-only">Open list</span>
                           <span class="icon arrow-down" aria-hidden="true"></span>
                       </span>
                   </a>
-                  <ul class="cat-sub-menu ">
-                      <li>
-                          <a href="/addcustomer">Add Customer</a>
+                  <ul class="cat-sub-menu  " id="cust-sub">
+                      <li >
+                          <a href="/addcustomer" >Add Customer</a>
                       </li>
                       <li>
                           <a href="/allcustomer">All Customers</a>
@@ -100,14 +100,14 @@
 
 
               <li>
-                <a class="show-cat-btn" href="##">
+                <a class="show-cat-btn" href="##" id="sale-col">
                     <span class="icon fa fa-list" aria-hidden="true"></span>Sale
                     <span class="category__btn transparent-btn" title="Open list">
                         <span class="sr-only">Open list</span>
                         <span class="icon arrow-down" aria-hidden="true"></span>
                     </span>
                 </a>
-                <ul class="cat-sub-menu">
+                <ul class="cat-sub-menu" id="sale-sub">
                     <li>
                         <a href="/sale-product">Sell Medicine</a>
                     </li>
@@ -120,14 +120,14 @@
 
               <li>
                
-                <a class="show-cat-btn " href="##" >
+                <a class="show-cat-btn " href="##" id="pur-col" >
                     <span class="icon fa fa-shopping-cart" aria-hidden="true"></span>Purchase
                     <span class="category__btn transparent-btn" title="Open list">
                         <span class="sr-only">Open list</span>
                         <span class="icon arrow-down" aria-hidden="true"></span>
                     </span>
                 </a>
-                <ul class="cat-sub-menu">
+                <ul class="cat-sub-menu" id="pur-sub">
                     <li>
                         <a href="/addpurchase">Add Purchase</a>
                     </li>
@@ -146,14 +146,14 @@
 
 
                 <li>
-                  <a class="show-cat-btn" href="##">
+                  <a class="show-cat-btn" href="##" id="par-col">
                       <span class="icon fa fa-users" aria-hidden="true"></span>Party
                       <span class="category__btn transparent-btn" title="Open list">
                           <span class="sr-only">Open list</span>
                           <span class="icon arrow-down" aria-hidden="true"></span>
                       </span>
                   </a>
-                  <ul class="cat-sub-menu">
+                  <ul class="cat-sub-menu" id="par-sub">
                       <li>
                           <a href="/add-party">Add Party</a>
                       </li>
@@ -164,14 +164,14 @@
               </li>
               
               <li>
-                <a class="show-cat-btn" href="##">
+                <a class="show-cat-btn" href="##" id="exp-col">
                     <span class="icon fa fa-money-bills" aria-hidden="true"></span>Expense Tracker
                     <span class="category__btn transparent-btn" title="Open list">
                         <span class="sr-only">Open list</span>
                         <span class="icon arrow-down" aria-hidden="true"></span>
                     </span>
                 </a>
-                <ul class="cat-sub-menu">
+                <ul class="cat-sub-menu" id="exp-sub">
                     <li>
                         <a href="/total-exp">Total Sells</a>
                     </li>
@@ -254,5 +254,33 @@
 
 
 <script>
+function checkHref(){
 
+    if(location.href.includes("addcustomer") || location.href.includes("allcustomer")|| location.href.includes("show-customer/")){
+        document.getElementById("cust-col").classList.add("active");
+        document.getElementById("cust-sub").classList.add("visible");
+        
+    }
+    else if(location.href.includes("bill-list") || location.href.includes("sale-product")){
+        document.getElementById("sale-col").classList.add("active");
+        document.getElementById("sale-sub").classList.add("visible");
+    }
+    else if(location.href.includes("addpurchase") || location.href.includes("all-purchases") || location.href.includes("stocks")){
+        document.getElementById("pur-col").classList.add("active");
+        document.getElementById("pur-sub").classList.add("visible");
+    }
+    else if(location.href.includes("add-party") || location.href.includes("parties") || location.href.includes("show-party/") || location.href.includes("view-vendor-order/")){
+        document.getElementById("par-col").classList.add("active");
+        document.getElementById("par-sub").classList.add("visible");
+    }
+    else if(location.href.includes("total-exp") || location.href.includes("total-purchase")|| location.href.includes("edit_credit") || location.href.includes("credits")|| location.href.includes("credit_history")){
+        document.getElementById("exp-col").classList.add("active");
+        document.getElementById("exp-sub").classList.add("visible");
+    }
+    else if(location.href.includes("mdetails")){
+        document.getElementById("medi-det").classList.add("active");
+    }
+    
+}
+checkHref();
 </script>
