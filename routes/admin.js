@@ -111,8 +111,6 @@ route.get("/profile",checkAdmin,async(req,res)=>{
     let d=await exe('select * from userlogin');
     var img = await exe(`select * from userlogin `)
 
-   
-
     let obj={
         "data":d[0],
         "img":img[0]
