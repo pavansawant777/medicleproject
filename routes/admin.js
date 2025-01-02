@@ -90,12 +90,22 @@ ttl_pr=Number(ttl_pr)+Number(pr);
    }
    }
 
+   var ttl_med = `select count(*) as ttl_m from stocks where qty > 0 `
+   var data3 = await exe(ttl_med)
 
-    var obj={"img":img[0],"ttl":ttl[0],"ttp":ttp[0],"ttl_sell":ttl_sell,"ttl_exp":ttl_exp,"ttl_pr":ttl_pr};
+   var ttl_bill = `select count(*) as ttl_b from bill `
+   var data4 = await exe(ttl_bill)
+
+   var data5 = await exe(`select count(*) as ttlo from stocks where qty=0`)
+   var data6 = await exe(`select count(*) as ttle from stocks where isExpired=1`)
+
+
+    var obj={"img":img[0],"ttl":ttl[0],"ttp":ttp[0],"ttl_sell":ttl_sell,"ttl_exp":ttl_exp,"ttl_pr":ttl_pr,"ttl_med":data3[0],"ttl_bill":data4[0],"ttl_out":data5[0],"ttlexp":data6[0]};
 
   
 
     res.render('admin/index.ejs',obj);
+    // res.send(data3)
 })
 
 
