@@ -5,17 +5,13 @@
  * 1. Correct the line height in all browsers.
  * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
-                                        
-                                     
                                         /* From Uiverse.io by csemszepp */
-                                      
                                         /* From Uiverse.io by csemszepp */
-                                        
                                         /* .sidebar-head img {
                                             filter: invert(100%) brightness(200%);
                                         } */
                                         
-                                         .custum-file-upload {
+                                        .custum-file-upload {
                                             height: 40px;
                                             width: 350px;
                                             display: flex;
@@ -1814,11 +1810,10 @@
                                             -webkit-box-shadow: 0 0 0 2px rgba(134, 182, 254, 0.5);
                                             box-shadow: 0 0 0 2px rgba(134, 182, 254, 0.5);
                                         }
-                                        
-                                        input:enabled:read-write:-webkit-any(:focus,
+                                        /* input:enabled:read-write:-webkit-any(:focus,
                                          :hover)::-webkit-calendar-picker-indicator {
                                             display: none !important;
-                                        }
+                                        } */
                                         
                                         .check {
                                             position: relative;
@@ -2007,8 +2002,6 @@
                                             background-color: white;
                                             border: 3px solid #549341;
                                             box-sizing: border-box;
-                                            
-
                                         }
                                         
                                         .sidebar-body {
@@ -3973,8 +3966,8 @@
                                             .mobile3 {
                                                 display: block !important;
                                             }
-                                            aside{
-                                                background-color:#549341 !important;
+                                            aside {
+                                                background-color: #549341 !important;
                                             }
                                         }
                                         
@@ -4288,10 +4281,10 @@
                                                 -webkit-box-shadow: 0 0 0 2px rgba(134, 182, 254, 0.5);
                                                 box-shadow: 0 0 0 2px rgba(134, 182, 254, 0.5);
                                             }
-                                            input:enabled:read-write:-webkit-any(:focus,
+                                            /* input:enabled:read-write:-webkit-any(:focus,
                                              :hover)::-webkit-calendar-picker-indicator {
                                                 display: none !important;
-                                            }
+                                            } */
                                             .check {
                                                 position: relative;
                                                 display: -webkit-box;
@@ -6399,12 +6392,11 @@
                                                 }
                                             }
                                         }
-
-                                        .backgrn{
+                                        
+                                        .backgrn {
                                             background-color: #549341;
                                         }
                                         /* button{
                                             background-color: #549341 !important;
                                             color: white !important;
                                         } */
-                                        
