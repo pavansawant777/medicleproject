@@ -98,7 +98,7 @@
 						<i class="fa-solid fa-file-invoice-dollar fs-1"></i>
                     </div>
                     <div class="stat-cards-info">
-                        <p class="stat-cards-info__num">147</p>
+                        <p class="stat-cards-info__num"><%-ttl_bill.ttl_b%></p>
                         <p class="stat-cards-info__title">Total Invoice</p>
                         <p class="stat-cards-info__progress">
                             <span class="stat-cards-info__profit danger">
@@ -114,7 +114,7 @@
 						<i class="fa-solid fa-briefcase-medical fs-1"></i>
                     </div>
                     <div class="stat-cards-info">
-                        <p class="stat-cards-info__num">147</p>
+                        <p class="stat-cards-info__num"><%-ttl_med.ttl_m%></p>
                         <p class="stat-cards-info__title">Total medicine</p>
                         <p class="stat-cards-info__progress">
                             <span class="stat-cards-info__profit danger">
@@ -138,10 +138,10 @@
                                 <td class="fw-bold">Total Purchase</td>
                                 <td class="text-danger fw-bold">&#8377; <%-ttl_exp%></td>
                             </tr>
-                            <tr>
+                            <!-- <tr>
                                 <td class="fw-bold">Total Pro</td>
                                 <td class="text-danger fw-bold">&#8377; <%-ttl_pr%></td>
-                            </tr>
+                            </tr> -->
                         </tbody>
                     </table>
 
@@ -155,7 +155,7 @@
 						<i class="fa-solid fa-circle-xmark fs-1"></i> 
 					                    </div>
                     <div class="stat-cards-info">
-                   
+                        <p class="stat-cards-info__num my-2"><%-ttl_out.ttlo%></p>
                         <p class="stat-cards-info__title">Out Of Stock  </p>
                         <p class="stat-cards-info__progress">
                             <span class="stat-cards-info__profit danger">
@@ -173,7 +173,7 @@
 						<i class="fa-solid fa-trash fs-1"></i>  
                     </div>
                     <div class="stat-cards-info">
-                   
+                        <p class="stat-cards-info__num my-2"><%-ttlexp.ttle%></p>
                         <p class="stat-cards-info__title">Expired medicine</p>
                         <p class="stat-cards-info__progress">
                             <span class="stat-cards-info__profit danger">

@@ -9,6 +9,7 @@
             height: 150px;
         }
         
+<<<<<<< HEAD
         #e-warn {
             display: none;
         }
@@ -23,6 +24,25 @@
             <h2>Add Medicines</h2>
         </div>
         <button type="button" id="alert" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+=======
+        height: 150px;
+    }
+    #e-warn{
+        display: none;
+    }
+ #show-date-warn{
+    display: none;
+ }
+ 
+</style>
+
+
+<div class="container p-4">
+  <div class="w-100 text-center mb-3">
+    <h2>Add Medicines</h2>
+  </div>
+<button type="button" id="alert"  class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+>>>>>>> 3d491dfca16d255540dd356e3f78b36885a8170e
     Launch static backdrop modal
   </button>
 
@@ -100,6 +120,7 @@
     <option value="<%-i.id%>" class="shadow-none"><%-i.name%></option>
     <%}%>
         </select>
+<<<<<<< HEAD
                             <span class="text-danger" id="e-warn" style="font-size: 13px;"><i class="fa fa-warning"></i>&nbsp;Please select the party </span>
                         </td>
                         <td colspan="2">
@@ -111,6 +132,33 @@
                         <td colspan="2"> <button class="btn w-100  btn-primary float-end" onclick="sendData()" disabled id="savebtn">Save</button>
                         </td>
                     </tr>
+=======
+    <span class="text-danger" id="e-warn" style="font-size: 13px;"><i class="fa fa-warning"></i>&nbsp;Please select the party </span>
+    </td>
+        <td  colspan="2">
+            <input type="number" id="vnum" class="w-100" placeholder="Contact" readonly >
+        </td>
+        <td  colspan="2">
+            <input type="email" id="vem" class="w-100" placeholder="Email" readonly >
+        </td>
+        <td colspan="2">    <button class="btn w-100  btn-primary float-end" onclick="sendData()" disabled id="savebtn">Save</button>
+        </td>
+    </tr>
+   
+</tfoot>
+<tfoot>
+    <td colspan="1">
+        <label class="">Select Date :</label>
+        <input type="date" id="date" name="idate"  class="form-control shadow-none"/>
+         
+        
+        <span style="font-size: 13px;" class="text-danger" id="show-date-warn"><i class="fa fa-warning"></i> Please select date</span>
+    </td>
+    <td colspan="2">
+      Total :
+<input type="number" class="form-control" id="net_ttl" readonly />
+    </td>
+>>>>>>> 3d491dfca16d255540dd356e3f78b36885a8170e
 
                 </tfoot>
                 <tfoot>
